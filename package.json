@@ -1,0 +1,14 @@
+{
+    "name": "ShortCircuit-Team-Project",
+    "version": "1.0.0",
+    "main": "app.js",
+    "repository": "https://github.com/jorosoft/ShortCircuit-Team-Project.git",
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "express": "4.15.3",
+        "passport": "0.3.2",
+        "pug": "2.0.0-rc.2",
+        "webpack": "3.0.0"
+    }
+}
