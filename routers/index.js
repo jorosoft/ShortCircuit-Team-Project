@@ -1,12 +1,12 @@
-const express = require("express");
+const express = require('express');
 
 module.exports = function(app, data) {
-    const controller = require("../controllers/home-controller")(data);
+    const controller = require('../controllers/home-controller')(data);
 
     const router = new express.Router();
 
     router
-        .get("/", controller.getHome);
+        .get('/', controller.getHome);
 
-    app.use("/", router);
+    app.use('/', router);
 };

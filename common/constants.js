@@ -1,3 +1,3 @@
 module.exports = {
-    APP_PORT: 3001
+    APP_PORT: 3001,
 };

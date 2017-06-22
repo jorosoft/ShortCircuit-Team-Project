@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 
-let app = express();
+const app = express();
 
-app.set("view engine", "pug");
+app.set('view engine', 'pug');
 
-app.use("/static", express.static("public"));
+app.use('/static', express.static('public'));
 
 module.exports = app;
