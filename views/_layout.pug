@@ -22,11 +22,15 @@ html(lang="en")
                         li
                             a(href="") Link
                     ul(class="nav navbar-nav navbar-right")
-                        li
-                            a(href="/login") Login
-                        li
-                            a(href="/register") Register
+                        if !result.user
+                            li
+                                a(href="/login") Login
+                            li
+                                a(href="/register") Register
+                        else
+                            li
+                                a(href="/profile") Welcome, !{result.user}
+                            li
+                                a(href="/logout") Logout
         .content.container      
-            block content
-        script(src="./libs/jquery/dist/jquery.min.js")
-        script(src="./libs/bootstrap/dist/js/bootstrap.min.js")
+            block content        

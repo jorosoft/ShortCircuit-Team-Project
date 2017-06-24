@@ -2,7 +2,7 @@
 
 const constants = require('./common/constants');
 const app = require('./config/app-config');
-const data = require('./data/data')(constants);
+const data = require('./data/data');
 require('./routers')(app, data);
 
 app.listen(constants.APP_PORT,

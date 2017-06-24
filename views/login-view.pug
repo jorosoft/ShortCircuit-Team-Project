@@ -8,12 +8,12 @@ block content
         .panel.panel-default
             .panel-heading Login
             .panel-body
-                form
+                form(action="/login" method="post")
                     .form-group
                         label(class="control-label" for="signupUser") Username
-                        input(id="signupUser" class="form-control" type="text")
+                        input(id="signupUser" name="username" class="form-control" type="text")
                     .form-group
                         label(class="control-label" for="signupPassword") Password
-                        input(id="signupPassword" class="form-control" type="password")
+                        input(id="signupPassword" name="password" class="form-control" type="password")
                     .form-group
                         button(id="btnLogin" type="submit" class="btn btn-info btn-block") Login
