@@ -1,12 +1,12 @@
-const express = require('express');
+/* globals __dirname */
+
+const fs = require('fs');
+const path = require('path');
 
 module.exports = function(app, data) {
-    const controller = require('../controllers/home-controller')(data);
-
-    const router = new express.Router();
-
-    router
-        .get('/', controller.getHome);
-
-    app.use('/', router);
+    fs.readdirSync('./routers/')
+        .filter((x) => x.includes('-router'))
+        .forEach((file) => {
+            require(path.join(__dirname, file))(app, data);
+        });
 };

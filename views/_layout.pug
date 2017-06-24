@@ -3,8 +3,30 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         block app-title
-        link(rel="stylesheet", href="/libs/bootstrap/dist/css/bootstrap.min.css")
-        link(rel="stylesheet", href="/static/styles/style.css")  
-        link(rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.png")             
+        link(rel="stylesheet", href="./libs/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="./static/styles/style.css")  
+        link(rel="shortcut icon" type="image/x-icon" href="./static/images/favicon.png")             
     body
-        block content
+        nav(class="navbar navbar-default")
+            .container-fluid
+                .navbar-header
+                    button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+                        span(class="sr-only") Toggle navigation
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                    a(class="navbar-brand" href="/") Our App
+
+                div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+                    ul(class="nav navbar-nav")
+                        li
+                            a(href="") Link
+                    ul(class="nav navbar-nav navbar-right")
+                        li
+                            a(href="/login") Login
+                        li
+                            a(href="/register") Register
+        .content.container      
+            block content
+        script(src="./libs/jquery/dist/jquery.min.js")
+        script(src="./libs/bootstrap/dist/js/bootstrap.min.js")

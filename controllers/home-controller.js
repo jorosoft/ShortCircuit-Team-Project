@@ -3,7 +3,7 @@ module.exports = function(data) {
         getHome(req, res) {
             res.render('home-view', {
                 result: {
-                    title: 'Hometo yeee',
+                    title: 'Our App',
                 },
             });
         },
