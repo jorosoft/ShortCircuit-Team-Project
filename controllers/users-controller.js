@@ -15,18 +15,27 @@ module.exports = function(data) {
             });
         },
         register(req, res) {
+            const user = {
+                username: req.body.username,
+                password: req.body.password,
+            };
 
+            data.addUser(user);
+            res.redirect('/login');
         },
         logout(req, res) {
             req.logout();
             res.status(200).redirect('/');
         },
         getProfile(req, res) {
-            res.render('profile-view', {
-                result: {
-                    title: 'User profile',
-                },
-            });
+            const result = {};
+            result.title = 'User profile';
+
+            if (req.isAuthenticated()) {
+                result.user = req.user.username;
+            }
+
+            res.render('profile-view', { result });
         },
         unauthorized(req, res) {
             res.render('unauthorized-view', {
