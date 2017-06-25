@@ -2,6 +2,7 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
+const crypto = require('crypto-js');
 const constants = require('../common/constants');
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
             MongoClient.connect(constants.DB_URL)
                 .then((db) => {
                     db.collection('users')
-                        .findOne({ username: username, password: password })
+                        .findOne({ username: username, password: new crypto.SHA1(password.trim()).toString() })
                         .then((user) => {
                             resolve(user || null);
                         });
@@ -37,7 +38,7 @@ module.exports = {
         MongoClient.connect(constants.DB_URL, function(err, db) {
             db.collection('users').insertOne({
                 username: user.username,
-                password: user.password,
+                password: new crypto.SHA1(user.password.trim()).toString(),
             });
 
             db.close();
