@@ -1,3 +1,6 @@
+const userModel = require('../models/user-model');
+const validator = require('../common/validator');
+
 module.exports = function(data) {
     return {
         getLoginForm(req, res) {
@@ -15,10 +18,11 @@ module.exports = function(data) {
             });
         },
         register(req, res) {
-            const user = {
-                username: req.body.username,
-                password: req.body.password,
-            };
+            validator.validatePasswordsMatch(req.body.password,
+                req.body.passConfirmation);
+
+            const user = userModel
+                .getUser(req.body.username, req.body.password);
 
             data.addUser(user);
             res.redirect('/login');
