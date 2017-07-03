@@ -6,14 +6,14 @@ module.exports = function(data) {
         getLoginForm(req, res) {
             res.render('login-view', {
                 result: {
-                    title: 'Login',
+                    title: 'Вход в системата',
                 },
             });
         },
         getRegisterForm(req, res) {
             res.render('register-view', {
                 result: {
-                    title: 'Register',
+                    title: 'Регистрация',
                 },
             });
         },
@@ -33,7 +33,7 @@ module.exports = function(data) {
         },
         getProfile(req, res) {
             const result = {};
-            result.title = 'User profile';
+            result.title = 'Профил';
 
             if (req.isAuthenticated()) {
                 result.user = req.user.username;
@@ -44,7 +44,7 @@ module.exports = function(data) {
         unauthorized(req, res) {
             res.render('unauthorized-view', {
                 result: {
-                    title: 'Unauthorized',
+                    title: 'ГРЕШКА!',
                 },
             });
         },

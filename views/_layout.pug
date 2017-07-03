@@ -1,8 +1,8 @@
 doctype html
-html(lang="en")
+html(lang="bg")
     head
         meta(charset="UTF-8")
-        block app-title
+        block page-title
         link(rel="stylesheet", href="./libs/bootstrap/dist/css/bootstrap.min.css")
         link(rel="stylesheet", href="./static/styles/style.css")  
         link(rel="shortcut icon" type="image/x-icon" href="./static/images/favicon.png")             
@@ -11,26 +11,32 @@ html(lang="en")
             .container-fluid
                 .navbar-header
                     button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
-                        span(class="sr-only") Toggle navigation
+                        span(class="sr-only") Включи навигация
                         span(class="icon-bar")
                         span(class="icon-bar")
                         span(class="icon-bar")
-                    a(class="navbar-brand" href="/") Our App
+                    a(class="navbar-brand" href="./") MediLink+
 
                 div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
                     ul(class="nav navbar-nav")
                         li
-                            a(href="") Link
+                            a(href="./personal-doctors") Лични лекари
+                        li
+                            a(href="./doctors") Специалисти
+                        li
+                            a(href="./reciepes-search") Справка рецепти
+                        li
+                            a(href="./about") За системата
                     ul(class="nav navbar-nav navbar-right")
                         if !result.user
                             li
-                                a(href="/login") Login
+                                a(href="./login") Вход
                             li
-                                a(href="/register") Register
+                                a(href="./register") Регистрация
                         else
                             li
-                                a(href="/profile") Welcome, !{result.user}
+                                a(href="./profile") Здравей, !{result.user}
                             li
-                                a(href="/logout") Logout
+                                a(href="./logout") Изход
         .content.container      
             block content        

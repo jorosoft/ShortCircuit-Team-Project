@@ -6,7 +6,11 @@ module.exports = function(app, data) {
     const router = new express.Router();
 
     router
-        .get('/', controller.getHome);
+        .get('/', controller.getHome)
+        .get('/about', controller.getAbout)
+        .get('/personal-doctors', controller.getPersonalDoctors)
+        .get('/doctors', controller.getDoctors)
+        .get('/reciepes-search', controller.getReciepesSearch);
 
     app.use('/', router);
 };
