@@ -19,6 +19,34 @@ html(lang="bg")
 
                 div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
                     ul(class="nav navbar-nav")
+
+                        //- if user is doctor
+                        if result.user
+                            li(class="dropdown")
+                                a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown) Лекар
+                                    span(class="caret")
+                                ul(class="dropdown-menu")
+                                    li
+                                        a(href="#") Добави пациент
+                                    li
+                                        a(href="#") Друго
+                                    li
+                                        a(href="#") Съвсем друго                         
+
+                        //- if user is patient
+                        if result.user
+                            li(class="dropdown")
+                                a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown) Пациент
+                                    span(class="caret")
+                                ul(class="dropdown-menu")
+                                    li
+                                        a(href="#") Резервация за преглед
+                                    li
+                                        a(href="#") Резултати
+                                    li
+                                        a(href="#") Кот такоа  
+                        //- 
+
                         li
                             a(href="./personal-doctors") Лични лекари
                         li
