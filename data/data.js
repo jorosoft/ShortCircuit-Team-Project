@@ -1,6 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
-const crypto = require('crypto-js');
 const constants = require('../common/constants');
 const userModel = require('../models/user-model');
 
@@ -9,13 +8,15 @@ module.exports = {
         return new Promise((resolve, reject) => {
             MongoClient.connect(constants.DB_URL)
                 .then((db) => {
-                    db.collection('users')
-                        .findOne({ _id: new ObjectId(id) })
-                        .then((user) => {
-                            resolve(user || null);
-                        });
+                    const user = db.collection('users')
+                        .findOne({ _id: new ObjectId(id) });
 
                     db.close();
+
+                    return user;
+                })
+                .then((user) => {
+                    resolve(user || null);
                 });
         });
     },
@@ -25,27 +26,32 @@ module.exports = {
         return new Promise((resolve, reject) => {
             MongoClient.connect(constants.DB_URL)
                 .then((db) => {
-                    db.collection('users')
+                    const user = db.collection('users')
                         .findOne({
                             username: searchedUser.username,
                             password: searchedUser.password,
-                        })
-                        .then((user) => {
-                            resolve(user || null);
                         });
 
                     db.close();
+
+                    return user;
+                })
+                .then((user) => {
+                    resolve(user || null);
                 });
         });
     },
     addUser(user) {
-        MongoClient.connect(constants.DB_URL, function(err, db) {
-            db.collection('users').insertOne({
-                username: user.username,
-                password: user.password,
-            });
+        return new Promise((resolve, reject) => {
+            MongoClient.connect(constants.DB_URL)
+                .then((db) => {
+                    db.collection('users').insertOne({
+                        username: user.username,
+                        password: user.password,
+                    });
 
-            db.close();
+                    db.close();
+                });
         });
     },
 };

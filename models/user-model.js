@@ -31,53 +31,8 @@ class User {
     }
 }
 
-class Patient extends User {
-    constructor(username, password, pin) {
-        super(username, password);
-        this.pin = pin;
-    }
-
-    get pin() {
-        return this._pin;
-    }
-
-    set pin(value) {
-        this._pin = value;
-    }
-}
-
-class Doctor extends User {
-    constructor(username, password, regNumber, speciality) {
-        super(username, password);
-        this.regNumber = regNumber;
-        this.speciality = speciality;
-    }
-
-    get regNumber() {
-        return this._regNumber;
-    }
-
-    set regNumber(value) {
-        this._regNumber = value;
-    }
-
-    get speciality() {
-        return this._speciality;
-    }
-
-    set speciality(value) {
-        this._speciality = value;
-    }
-}
-
 module.exports = {
     getUser(username, password) {
         return new User(username, password);
-    },
-    getPatient(username, password, pin) {
-        return new Patient(username, password, pin);
-    },
-    getDoctor(username, password, regNumber, speciality) {
-        return new Doctor(username, password, regNumber, speciality);
     },
 };

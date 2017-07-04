@@ -1,5 +1,3 @@
-// app start point
-
 const constants = require('./common/constants');
 const app = require('./config/app-config');
 const data = require('./data/data');
