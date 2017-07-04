@@ -4,14 +4,14 @@ const validator = require('../common/validator');
 module.exports = function(data) {
     return {
         getLoginForm(req, res) {
-            res.render('login-view', {
+            res.render('auth/login-view', {
                 result: {
                     title: 'Вход в системата',
                 },
             });
         },
         getRegisterForm(req, res) {
-            res.render('register-view', {
+            res.render('auth/register-view', {
                 result: {
                     title: 'Регистрация',
                 },
@@ -39,7 +39,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('profile-view', { result });
+            res.render('auth/profile-view', { result });
         },
         unauthorized(req, res) {
             res.render('unauthorized-view', {

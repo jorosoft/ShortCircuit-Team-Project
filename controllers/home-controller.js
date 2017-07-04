@@ -8,7 +8,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('home-view', { result });
+            res.render('home/home-view', { result });
         },
         getAbout(req, res) {
             const result = {};
@@ -18,7 +18,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('about-view', { result });
+            res.render('home/about-view', { result });
         },
         getPersonalDoctors(req, res) {
             const result = {};
@@ -28,7 +28,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('personal-doctors-view', { result });
+            res.render('home/personal-doctors-view', { result });
         },
         getDoctors(req, res) {
             const result = {};
@@ -38,7 +38,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('doctors-view', { result });
+            res.render('home/doctors-view', { result });
         },
         getReciepesSearch(req, res) {
             const result = {};
@@ -48,7 +48,7 @@ module.exports = function(data) {
                 result.user = req.user.username;
             }
 
-            res.render('reciepes-search-view', { result });
+            res.render('home/reciepes-search-view', { result });
         },
     };
 };

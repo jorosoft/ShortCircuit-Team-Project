@@ -6,7 +6,7 @@ module.exports = function(app, data) {
     const router = new express.Router();
 
     router
-        .get('/patient/reservation', controller.getReservationForm);
+        .get('/reservation', controller.getReservationForm);
 
     app.use('/', router);
 };
