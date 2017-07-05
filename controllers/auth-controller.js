@@ -22,9 +22,25 @@ module.exports = function(data) {
                 req.body.passConfirmation);
 
             const user = models
-                .getUser(req.body.username, req.body.password);
+                .getUser(req.body.username,
+                    req.body.password,
+                    req.body.firstName,
+                    req.body.lastName);
 
-            data.addUser(user);
+            data.addUser(user)
+                .then((userId) => {
+                    if (req.body.doctorType) {
+                        const doctor = models.getDoctor(userId,
+                            req.body.regNumber,
+                            req.body.speciality);
+
+                        data.addDoctor(doctor);
+                    } else if (req.body.patientType) {
+                        const patient = models.getPatient(userId, req.body.pin);
+
+                        data.addPatient(patient);
+                    }
+                });
 
             res.redirect('/login');
         },

@@ -26,8 +26,8 @@ class Patient {
 
 module.exports = function() {
     return {
-        getPatient(pin) {
-            return new Patient(pin);
+        getPatient(userId, pin) {
+            return new Patient(userId, pin);
         },
     };
 };

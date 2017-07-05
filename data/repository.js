@@ -33,6 +33,8 @@ module.exports = function(constants) {
                         db.collection(collection).insertOne(entity);
 
                         db.close();
+
+                        return entity._id;
                     })
                     .then(resolve);
             });

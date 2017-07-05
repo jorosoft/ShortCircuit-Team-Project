@@ -21,13 +21,22 @@ block content
                         span(class="input-group-addon" id="sizing-addon3")
                             span(class="glyphicon glyphicon-lock")
                         input(type="password" class="form-control" name="passConfirmation" placeholder="Повтори парола" aria-describedby="sizing-addon3")
+                    .form-group.input-group.input-group-sm                        
+                        span(class="input-group-addon" id="sizing-addon3")
+                            span(class="glyphicon glyphicon-user")
+                        input(type="text" class="form-control" name="firstName" placeholder="Име" aria-describedby="sizing-addon3")
+                    .form-group.input-group.input-group-sm                        
+                        span(class="input-group-addon" id="sizing-addon3")
+                            span(class="glyphicon glyphicon-user")
+                        input(type="text" class="form-control" name="lastName" placeholder="Фамилия" aria-describedby="sizing-addon3")
+                    
                     .form-group.input-group.input-group-sm
                         span Аз съм: 
                         label(class="radio-inline" for="doctor") 
-                            input(id="doctor" type="radio" name="userType") 
+                            input(id="doctor" type="radio" name="doctorType") 
                             span Лекар
                         label(class="radio-inline" for="patient") 
-                            input(id="patient" type="radio" name="userType")
+                            input(id="patient" type="radio" name="patientType")
                             span Пациент 
 
                     #reg-wrapper

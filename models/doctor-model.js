@@ -35,8 +35,8 @@ class Doctor {
 
 module.exports = function() {
     return {
-        getDoctor(regNumber, speciality) {
-            return new Doctor(regNumber, speciality);
+        getDoctor(userId, regNumber, speciality) {
+            return new Doctor(userId, regNumber, speciality);
         },
     };
 };

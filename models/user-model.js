@@ -60,8 +60,8 @@ module.exports = function() {
         getBaseUser(user, pass) {
             return new BaseUser(user, pass);
         },
-        getUser(user, pass) {
-            return new User(user, pass);
+        getUser(user, pass, firstName, lastName) {
+            return new User(user, pass, firstName, lastName);
         },
     };
 };

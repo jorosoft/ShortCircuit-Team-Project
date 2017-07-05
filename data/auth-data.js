@@ -11,7 +11,7 @@ module.exports = function(repository) {
             return repository.findOne('users', searchedUser);
         },
         addUser(user) {
-            repository.add('users', user);
+            return repository.add('users', user);
         },
     };
 };
