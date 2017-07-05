@@ -1,6 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const data = require('../data/data');
+const constants = require('../common/constants');
+const repository = require('../data/repository')(constants);
+const data = require('../data')(repository);
 
 
 module.exports = function(app) {

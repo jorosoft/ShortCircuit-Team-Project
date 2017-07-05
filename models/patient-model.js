@@ -24,8 +24,10 @@ class Patient {
     }
 }
 
-module.exports = {
-    getPatient(pin) {
-        return new Patient(pin);
-    },
+module.exports = function() {
+    return {
+        getPatient(pin) {
+            return new Patient(pin);
+        },
+    };
 };

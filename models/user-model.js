@@ -2,37 +2,66 @@ const crypto = require('crypto-js');
 const constants = require('../common/constants');
 const validator = require('../common/validator');
 
-class User {
-    constructor(username, password) {
-        this.username = username;
-        this.password = password;
+class BaseUser {
+    constructor(user, pass) {
+        this.user = user;
+        this.pass = pass;
     }
 
-    get username() {
-        return this._username;
+    get user() {
+        return this.username;
     }
 
-    set username(value) {
+    set user(value) {
         validator.validateStringLength(value,
             constants.MIN_USERNAME_LENGTH, constants.MAX_USERNAME_LENGTH);
 
-        this._username = value.trim();
+        this.username = value.trim();
     }
 
-    get password() {
-        return this._password;
+    get pass() {
+        return this.password;
     }
 
-    set password(value) {
+    set pass(value) {
         validator.validateStringLength(value,
             constants.MIN_PASSWORD_LENGTH, constants.MAX_PASSWORD_LENGTH);
 
-        this._password = new crypto.SHA1(value.trim()).toString();
+        this.password = new crypto.SHA1(value.trim()).toString();
     }
 }
 
-module.exports = {
-    getUser(username, password) {
-        return new User(username, password);
-    },
+class User extends BaseUser {
+    constructor(user, pass, firstName, lastName) {
+        super(user, pass);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    get firstName() {
+        return this._firstName;
+    }
+
+    set firstName(value) {
+        this._firstName = value;
+    }
+
+    get lastName() {
+        return this._lastName;
+    }
+
+    set lastName(value) {
+        this._lastName = value;
+    }
+}
+
+module.exports = function() {
+    return {
+        getBaseUser(user, pass) {
+            return new BaseUser(user, pass);
+        },
+        getUser(user, pass) {
+            return new User(user, pass);
+        },
+    };
 };

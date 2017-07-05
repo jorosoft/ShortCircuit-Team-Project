@@ -1,4 +1,4 @@
-const userModel = require('../models/user-model');
+const models = require('../models')();
 const validator = require('../common/validator');
 
 module.exports = function(data) {
@@ -21,10 +21,11 @@ module.exports = function(data) {
             validator.validatePasswordsMatch(req.body.password,
                 req.body.passConfirmation);
 
-            const user = userModel
+            const user = models
                 .getUser(req.body.username, req.body.password);
 
             data.addUser(user);
+
             res.redirect('/login');
         },
         logout(req, res) {

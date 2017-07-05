@@ -33,8 +33,10 @@ class Doctor {
     }
 }
 
-module.exports = {
-    getDoctor(regNumber, speciality) {
-        return new Doctor(regNumber, speciality);
-    },
+module.exports = function() {
+    return {
+        getDoctor(regNumber, speciality) {
+            return new Doctor(regNumber, speciality);
+        },
+    };
 };
