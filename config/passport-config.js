@@ -1,8 +1,10 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const constants = require('../common/constants');
+const validator = require('../common/validator');
+const models = require('../models')(constants, validator);
 const repository = require('../data/repository')(constants);
-const data = require('../data')(repository);
+const data = require('../data')(repository, models);
 
 
 module.exports = function(app) {

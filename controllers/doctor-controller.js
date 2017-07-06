@@ -1,4 +1,4 @@
-module.exports = function(data) {
+module.exports = function(data, models, validator) {
     return {
         getAddPatientForm(req, res) {
             res.render('doctor/add-patient-view', {

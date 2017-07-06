@@ -31,9 +31,28 @@ function showDoctorForm() {
                 placeholder="Специалност" aria-describedby="sizing-addon3" />  
     </div>`);
 
+    const $medCenter = $(`<div class="form-group input-group input-group-sm">
+            <span class="input-group-addon" id="sizing-addon3">
+                <span class="glyphicon glyphicon-home"></span>
+            </span>
+            <input type="text" class="form-control" name="medCenter" 
+                placeholder="Медицински център" 
+                aria-describedby="sizing-addon3" />
+    </div>`);
+
+    const $city = $(`<div class="form-group input-group input-group-sm">
+            <span class="input-group-addon" id="sizing-addon3">
+                <span class="glyphicon glyphicon-globe"></span>
+            </span>
+            <input type="text" class="form-control" name="city" 
+                placeholder="Населено място" aria-describedby="sizing-addon3" />
+    </div>`);
+
     $wrapper.html('');
     $wrapper.append($regNumber);
     $wrapper.append($speciality);
+    $wrapper.append($medCenter);
+    $wrapper.append($city);
 }
 
 $('.radio-inline').on('click', (ev) => {

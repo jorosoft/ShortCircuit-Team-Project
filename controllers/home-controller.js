@@ -1,4 +1,4 @@
-module.exports = function(data) {
+module.exports = function(data, models, validator) {
     return {
         getHome(req, res) {
             const result = {};

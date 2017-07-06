@@ -1,33 +1,39 @@
-const constants = require('../common/constants');
-const validator = require('../common/validator');
+module.exports = function(constants, validator) {
+    class Patient {
+        constructor(userId, pin, doctorId) {
+            this.userId = userId;
+            this.pin = pin;
+            this.doctorId = doctorId;
+        }
 
-class Patient {
-    constructor(userId, pin) {
-        this.userId = userId;
-        this.pin = pin;
+        get userId() {
+            return this._userId;
+        }
+
+        set userId(value) {
+            this._userId = value;
+        }
+
+        get pin() {
+            return this._pin;
+        }
+
+        set pin(value) {
+            this._pin = value;
+        }
+
+        get doctorId() {
+            return this._doctorId;
+        }
+
+        set doctorId(value) {
+            this._doctorId = value;
+        }
     }
 
-    get userId() {
-        return this._userId;
-    }
-
-    set userId(value) {
-        this._userId = value;
-    }
-
-    get pin() {
-        return this._pin;
-    }
-
-    set pin(value) {
-        this._pin = value;
-    }
-}
-
-module.exports = function() {
     return {
-        getPatient(userId, pin) {
-            return new Patient(userId, pin);
+        getPatient(userId, pin, doctorId) {
+            return new Patient(userId, pin, doctorId);
         },
     };
 };

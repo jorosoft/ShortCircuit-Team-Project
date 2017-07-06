@@ -1,6 +1,4 @@
-const models = require('../models')();
-
-module.exports = function(repository) {
+module.exports = function(repository, models) {
     return {
         findUserById(id) {
             return repository.findOne('users', id);

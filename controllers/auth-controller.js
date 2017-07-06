@@ -1,7 +1,4 @@
-const models = require('../models')();
-const validator = require('../common/validator');
-
-module.exports = function(data) {
+module.exports = function(data, models, validator) {
     return {
         getLoginForm(req, res) {
             res.render('auth/login-view', {
@@ -29,13 +26,15 @@ module.exports = function(data) {
 
             data.addUser(user)
                 .then((userId) => {
-                    if (req.body.doctorType) {
+                    if (req.body.optradio === 'doctorType') {
                         const doctor = models.getDoctor(userId,
                             req.body.regNumber,
-                            req.body.speciality);
+                            req.body.speciality,
+                            req.body.medCenter,
+                            req.body.city);
 
                         data.addDoctor(doctor);
-                    } else if (req.body.patientType) {
+                    } else if (req.body.optradio === 'patientType') {
                         const patient = models.getPatient(userId, req.body.pin);
 
                         data.addPatient(patient);

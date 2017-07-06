@@ -1,4 +1,4 @@
-module.exports = function(data) {
+module.exports = function(data, models, validator) {
     return {
         getReservationForm(req, res) {
             res.render('patient/reservation-view', {

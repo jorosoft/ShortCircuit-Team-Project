@@ -1,7 +1,8 @@
 const express = require('express');
 
-module.exports = function(app, data) {
-    const controller = require('../controllers/home-controller')(data);
+module.exports = function(app, data, models, validator) {
+    const controller =
+        require('../controllers/home-controller')(data, models, validator);
 
     const router = new express.Router();
 
