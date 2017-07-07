@@ -31,7 +31,8 @@ module.exports = function(data, models, validator) {
                             req.body.regNumber,
                             req.body.speciality,
                             req.body.medCenter,
-                            req.body.city);
+                            req.body.city,
+                            false);
 
                         data.addDoctor(doctor);
                     } else if (req.body.optradio === 'patientType') {

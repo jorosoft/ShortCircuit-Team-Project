@@ -7,7 +7,7 @@ let user = models.getUser('pesho', '1234', 'Петър', 'Стоянов');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '12345', 'хирург');
+        const doctor = models.getDoctor(userId, '12345', 'хирург', 'МЦ Капана', false);
         data.addDoctor(doctor);
     });
 
@@ -15,7 +15,7 @@ user = models.getUser('stamat', '7777', 'Стамат', 'Киров');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '56567', 'невролог');
+        const doctor = models.getDoctor(userId, '56567', 'невролог', 'МЦ Тракия', true);
         data.addDoctor(doctor);
     });
 
@@ -23,7 +23,7 @@ user = models.getUser('pena', '0000', 'Пенка', 'Страхилова');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '98765', 'дерматолог');
+        const doctor = models.getDoctor(userId, '98765', 'дерматолог', 'Военна болница', false);
         data.addDoctor(doctor);
     });
 

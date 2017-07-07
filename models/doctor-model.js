@@ -1,11 +1,13 @@
 module.exports = function(constants, validator) {
     class Doctor {
-        constructor(userId, regNumber, speciality, medCenter, city) {
+        constructor(
+            userId, regNumber, speciality, medCenter, city, hasPatients) {
             this.userId = userId;
             this.regNumber = regNumber;
             this.speciality = speciality;
             this.medCenter = medCenter;
             this.city = city;
+            this.hasPatients = hasPatients;
         }
 
         get userId() {
@@ -47,11 +49,20 @@ module.exports = function(constants, validator) {
         set city(value) {
             this._city = value;
         }
+
+        get hasPatients() {
+            return this._hasPatients;
+        }
+
+        set hasPatients(value) {
+            this._hasPatients = value;
+        }
     }
 
     return {
-        getDoctor(userId, regNumber, speciality, medCenter, city) {
-            return new Doctor(userId, regNumber, speciality, medCenter, city);
+        getDoctor(userId, regNumber, speciality, medCenter, city, hasPatients) {
+            return new Doctor(
+                userId, regNumber, speciality, medCenter, city, hasPatients);
         },
     };
 };

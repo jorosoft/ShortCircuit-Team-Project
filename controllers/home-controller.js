@@ -30,7 +30,7 @@ module.exports = function(data, models, validator) {
 
             res.render('home/personal-doctors-view', { result });
         },
-        getDoctors(req, res) {
+        getDoctorsView(req, res) {
             const result = {};
             result.title = 'Специалисти';
 
@@ -39,6 +39,10 @@ module.exports = function(data, models, validator) {
             }
 
             res.render('home/doctors-view', { result });
+        },
+        getDoctors(req, res) {
+            data.getDoctors()
+                .then((doctors) => res.send(JSON.stringify(doctors)));
         },
         getReciepesSearch(req, res) {
             const result = {};

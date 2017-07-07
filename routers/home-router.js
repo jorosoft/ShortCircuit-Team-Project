@@ -10,7 +10,8 @@ module.exports = function(app, data, models, validator) {
         .get('/', controller.getHome)
         .get('/about', controller.getAbout)
         .get('/personal-doctors', controller.getPersonalDoctors)
-        .get('/doctors', controller.getDoctors)
+        .get('/doctors', controller.getDoctorsView)
+        .get('/doctors-all', controller.getDoctors)
         .get('/reciepes-search', controller.getReciepesSearch);
 
     app.use('/', router);
