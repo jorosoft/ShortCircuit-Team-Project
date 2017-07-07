@@ -1,13 +1,15 @@
 const constants = require('./common/constants');
+const validator = require('./common/validator');
 const repository = require('./data/repository')(constants);
-const data = require('./data')(repository);
-const models = require('./models')();
+const models = require('./models')(constants, validator);
+const data = require('./data')(repository, models);
+
 
 let user = models.getUser('pesho', '1234', 'Петър', 'Стоянов');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '12345', 'хирург', 'МЦ Капана', false);
+        const doctor = models.getDoctor(userId, '12345', 'хирург', 'МЦ Капана', 'Пловдив', false);
         data.addDoctor(doctor);
     });
 
@@ -15,7 +17,7 @@ user = models.getUser('stamat', '7777', 'Стамат', 'Киров');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '56567', 'невролог', 'МЦ Тракия', true);
+        const doctor = models.getDoctor(userId, '56567', 'невролог', 'МЦ Тракия', 'Стара Загора', true);
         data.addDoctor(doctor);
     });
 
@@ -23,7 +25,7 @@ user = models.getUser('pena', '0000', 'Пенка', 'Страхилова');
 
 data.addUser(user)
     .then((userId) => {
-        const doctor = models.getDoctor(userId, '98765', 'дерматолог', 'Военна болница', false);
+        const doctor = models.getDoctor(userId, '98765', 'дерматолог', 'Военна болница', 'София', false);
         data.addDoctor(doctor);
     });
 

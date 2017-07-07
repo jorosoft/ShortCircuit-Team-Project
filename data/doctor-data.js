@@ -3,8 +3,8 @@ module.exports = function(repository, models) {
         addDoctor(doctor) {
             repository.add('doctors', doctor);
         },
-        getDoctors() {
-            return repository.find('doctors', {});
+        getDoctors(filter) {
+            return repository.find('doctors', filter);
         },
     };
 };

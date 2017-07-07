@@ -11,5 +11,8 @@ module.exports = function(repository, models) {
         addUser(user) {
             return repository.add('users', user);
         },
+        getUsers() {
+            return repository.find('users', {});
+        },
     };
 };

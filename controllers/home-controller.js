@@ -20,7 +20,7 @@ module.exports = function(data, models, validator) {
 
             res.render('home/about-view', { result });
         },
-        getPersonalDoctors(req, res) {
+        getPersonalDoctorsView(req, res) {
             const result = {};
             result.title = 'Лични лекари';
 
@@ -29,6 +29,24 @@ module.exports = function(data, models, validator) {
             }
 
             res.render('home/personal-doctors-view', { result });
+        },
+        getPersonalDoctors(req, res) {
+            Promise.all([data.getUsers(),
+                    data.getDoctors({ _hasPatients: true }),
+                ])
+                .then(([users, doctors]) => {
+                    doctors.forEach((doc) => {
+                        users.forEach((user) => {
+                            if (doc._userId.toString() ===
+                                user._id.toString()) {
+                                doc._firstName = user._firstName;
+                                doc._lastName = user._lastName;
+                            }
+                        });
+                    });
+
+                    res.send(JSON.stringify(doctors));
+                });
         },
         getDoctorsView(req, res) {
             const result = {};
@@ -41,8 +59,22 @@ module.exports = function(data, models, validator) {
             res.render('home/doctors-view', { result });
         },
         getDoctors(req, res) {
-            data.getDoctors()
-                .then((doctors) => res.send(JSON.stringify(doctors)));
+            Promise.all([data.getUsers(),
+                    data.getDoctors({ _hasPatients: false }),
+                ])
+                .then(([users, doctors]) => {
+                    doctors.forEach((doc) => {
+                        users.forEach((user) => {
+                            if (doc._userId.toString() ===
+                                user._id.toString()) {
+                                doc._firstName = user._firstName;
+                                doc._lastName = user._lastName;
+                            }
+                        });
+                    });
+
+                    res.send(JSON.stringify(doctors));
+                });
         },
         getReciepesSearch(req, res) {
             const result = {};

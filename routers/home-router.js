@@ -9,9 +9,10 @@ module.exports = function(app, data, models, validator) {
     router
         .get('/', controller.getHome)
         .get('/about', controller.getAbout)
-        .get('/personal-doctors', controller.getPersonalDoctors)
+        .get('/personal-doctors', controller.getPersonalDoctorsView)
         .get('/doctors', controller.getDoctorsView)
         .get('/doctors-all', controller.getDoctors)
+        .get('/personal-doctors-all', controller.getPersonalDoctors)
         .get('/reciepes-search', controller.getReciepesSearch);
 
     app.use('/', router);

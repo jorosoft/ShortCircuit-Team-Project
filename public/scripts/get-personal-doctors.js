@@ -1,6 +1,6 @@
 /* globals $ getData */
 
-getData('/doctors-all')
+getData('/personal-doctors-all')
     .then((doctors) => {
         const $ul = $('<ul>');
         doctors.forEach((doctor) => {
