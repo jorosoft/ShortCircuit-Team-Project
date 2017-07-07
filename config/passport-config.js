@@ -1,13 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const constants = require('../common/constants');
-const validator = require('../common/validator');
-const models = require('../models')(constants, validator);
-const repository = require('../data/repository')(constants);
-const data = require('../data')(repository, models);
 
-
-module.exports = function(app) {
+module.exports = function(app, data) {
     app.use(passport.initialize());
     app.use(passport.session());
 

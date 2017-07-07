@@ -24,7 +24,20 @@ module.exports = function(constants) {
             });
         },
         find(collection, filter) {
+            return new Promise((resolve, reject) => {
+                MongoClient.connect(constants.DB_URL)
+                    .then((db) => {
+                        const entities = db.collection(collection)
+                            .find(filter).toArray();
 
+                        db.close();
+
+                        return entities;
+                    })
+                    .then((entities) => {
+                        resolve(entities || null);
+                    });
+            });
         },
         add(collection, entity) {
             return new Promise((resolve, reject) => {
@@ -40,7 +53,17 @@ module.exports = function(constants) {
             });
         },
         update(collection, entity) {
+            return new Promise((resolve, reject) => {
+                MongoClient.connect(constants.DB_URL)
+                    .then((db) => {
+                        db.collection(collection)
+                            .update({ _id: entity._id },
+                                entity, { upsert: true });
 
+                        db.close();
+                    })
+                    .then(resolve);
+            });
         },
     };
 };
