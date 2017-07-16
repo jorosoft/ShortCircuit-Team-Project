@@ -22,7 +22,8 @@ module.exports = function(data, models, validator) {
                 .getUser(req.body.username,
                     req.body.password,
                     req.body.firstName,
-                    req.body.lastName);
+                    req.body.lastName,
+                    req.body.optradio);
 
             data.addUser(user)
                 .then((userId) => {
@@ -40,7 +41,8 @@ module.exports = function(data, models, validator) {
 
                         data.addPatient(patient);
                     }
-                });
+                })
+                .catch(console.log);
 
             res.redirect('/login');
         },

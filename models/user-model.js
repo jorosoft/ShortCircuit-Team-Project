@@ -31,10 +31,11 @@ module.exports = function(constants, validator) {
     }
 
     class User extends BaseUser {
-        constructor(user, pass, firstName, lastName) {
+        constructor(user, pass, firstName, lastName, userType) {
             super(user, pass);
             this.firstName = firstName;
             this.lastName = lastName;
+            this.userType = userType;
         }
 
         get firstName() {
@@ -52,14 +53,22 @@ module.exports = function(constants, validator) {
         set lastName(value) {
             this._lastName = value;
         }
+
+        get userType() {
+            return this._userType;
+        }
+
+        set userType(value) {
+            this._userType = value;
+        }
     }
 
     return {
         getBaseUser(user, pass) {
             return new BaseUser(user, pass);
         },
-        getUser(user, pass, firstName, lastName) {
-            return new User(user, pass, firstName, lastName);
+        getUser(user, pass, firstName, lastName, userType) {
+            return new User(user, pass, firstName, lastName, userType);
         },
     };
 };

@@ -5,7 +5,7 @@ const models = require('./models')(constants, validator);
 const data = require('./data')(repository, models);
 
 
-let user = models.getUser('pesho', '1234', 'Петър', 'Стоянов');
+let user = models.getUser('pesho', '1234', 'Петър', 'Стоянов', 'doctorType');
 
 data.addUser(user)
     .then((userId) => {
@@ -13,7 +13,7 @@ data.addUser(user)
         data.addDoctor(doctor);
     });
 
-user = models.getUser('stamat', '7777', 'Стамат', 'Киров');
+user = models.getUser('stamat', '7777', 'Стамат', 'Киров', 'doctorType');
 
 data.addUser(user)
     .then((userId) => {
@@ -21,7 +21,7 @@ data.addUser(user)
         data.addDoctor(doctor);
     });
 
-user = models.getUser('pena', '0000', 'Пенка', 'Страхилова');
+user = models.getUser('pena', '0000', 'Пенка', 'Страхилова', 'doctorType');
 
 data.addUser(user)
     .then((userId) => {
@@ -32,7 +32,7 @@ data.addUser(user)
 
 // /////////////////////////////////////////////////////////
 
-user = models.getUser('gosho', '1111', 'Георги', 'Димитров');
+user = models.getUser('gosho', '1111', 'Георги', 'Димитров', 'patientType');
 
 data.addUser(user)
     .then((userId) => {
@@ -40,7 +40,7 @@ data.addUser(user)
         data.addPatient(patient);
     });
 
-user = models.getUser('lalo', '1010', 'Лало', 'Костов');
+user = models.getUser('lalo', '1010', 'Лало', 'Костов', 'patientType');
 
 data.addUser(user)
     .then((userId) => {
