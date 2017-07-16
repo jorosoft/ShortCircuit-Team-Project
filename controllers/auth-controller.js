@@ -1,18 +1,31 @@
 module.exports = function(data, models, validator) {
+    function init(req, result) {
+        if (req.isAuthenticated()) {
+            result.user = req.user.username;
+            if (req.user._userType === 'doctorType') {
+                result.isDoctor = true;
+            }
+
+            if (req.user._userType === 'patientType') {
+                result.isPatient = true;
+            }
+        }
+
+        return result;
+    }
+
     return {
         getLoginForm(req, res) {
-            res.render('auth/login-view', {
-                result: {
-                    title: 'Вход в системата',
-                },
-            });
+            const result = init(req, {});
+            result.title = 'Вход в системата';
+
+            res.render('auth/login-view', { result });
         },
         getRegisterForm(req, res) {
-            res.render('auth/register-view', {
-                result: {
-                    title: 'Регистрация',
-                },
-            });
+            const result = init(req, {});
+            result.title = 'Регистрация';
+
+            res.render('auth/register-view', { result });
         },
         register(req, res) {
             validator.validatePasswordsMatch(req.body.password,
@@ -51,21 +64,16 @@ module.exports = function(data, models, validator) {
             res.status(200).redirect('/');
         },
         getProfile(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'Профил';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('auth/profile-view', { result });
         },
         unauthorized(req, res) {
-            res.render('unauthorized-view', {
-                result: {
-                    title: 'ГРЕШКА!',
-                },
-            });
+            const result = init(req, {});
+            result.title = 'ГРЕШКА!';
+
+            res.render('unauthorized-view', { result });
         },
     };
 };

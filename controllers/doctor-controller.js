@@ -1,12 +1,25 @@
 module.exports = function(data, models, validator) {
+    function init(req, result) {
+        if (req.isAuthenticated()) {
+            result.user = req.user.username;
+            if (req.user._userType === 'doctorType') {
+                result.isDoctor = true;
+            }
+
+            if (req.user._userType === 'patientType') {
+                result.isPatient = true;
+            }
+        }
+
+        return result;
+    }
+
     return {
         getAddPatientForm(req, res) {
-            res.render('doctor/add-patient-view', {
-                result: {
-                    title: 'Добавяне на пациент',
-                    user: req.user.username || null,
-                },
-            });
+            const result = init(req, {});
+            result.title = 'Добавяне на пациент';
+
+            res.render('doctor/add-patient-view', { result });
         },
     };
 };

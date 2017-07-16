@@ -1,32 +1,35 @@
 module.exports = function(data, models, validator) {
+    function init(req, result) {
+        if (req.isAuthenticated()) {
+            result.user = req.user.username;
+            if (req.user._userType === 'doctorType') {
+                result.isDoctor = true;
+            }
+
+            if (req.user._userType === 'patientType') {
+                result.isPatient = true;
+            }
+        }
+
+        return result;
+    }
+
     return {
         getHome(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'MediLink+';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('home/home-view', { result });
         },
         getAbout(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'За системата';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('home/about-view', { result });
         },
         getPersonalDoctorsView(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'Лични лекари';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('home/personal-doctors-view', { result });
         },
@@ -45,16 +48,12 @@ module.exports = function(data, models, validator) {
                         });
                     });
 
-                    res.send(JSON.stringify(doctors));
+                    res.send(JSON.stringify({ result: doctors }));
                 });
         },
         getDoctorsView(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'Специалисти';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('home/doctors-view', { result });
         },
@@ -73,22 +72,18 @@ module.exports = function(data, models, validator) {
                         });
                     });
 
-                    res.send(JSON.stringify(doctors));
+                    res.send(JSON.stringify({ result: doctors }));
                 });
         },
         getRecipesSearchView(req, res) {
-            const result = {};
+            const result = init(req, {});
             result.title = 'Справка рецепти';
-
-            if (req.isAuthenticated()) {
-                result.user = req.user.username;
-            }
 
             res.render('home/recipes-search-view', { result });
         },
         recipesSearch(req, res) {
             const pin = req.body.pin;
-            const result = {};
+            const result = init(req, {});
 
             data.getPatient({ _pin: pin })
                 .then((patient) => {
@@ -122,10 +117,14 @@ module.exports = function(data, models, validator) {
                             .toLocaleDateString();
                         doctors.forEach((doc) => {
                             users.forEach((user) => {
-                                if (doc._userId.toString() ===
-                                    user._id.toString()) {
+                                if ((doc._userId.toString() ===
+                                        user._id.toString()) &&
+                                    recipe._doctorId.toString() ===
+                                    doc._id.toString()) {
                                     recipe._doctorFirstName = user._firstName;
                                     recipe._doctorLastName = user._lastName;
+                                    recipe._doctorSpeciality = doc._speciality;
+                                    recipe._doctorRegNumber = doc._regNumber;
                                 }
                             });
                         });

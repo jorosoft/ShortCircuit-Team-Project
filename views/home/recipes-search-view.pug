@@ -22,18 +22,22 @@ block content
             .recipes
                 p Издадени рецепти за: 
                     strong !{result._patientFirstName}  !{result._patientLastName}
-                table(class="table")
+                table(class="table table-striped")
                     thead
                         tr
                             th Издател
+                            th УИН
+                            th Специалност
                             th Валидна до
                             th Съдържание
                     tbody                
                         each val in result.recipes
                             tr
                                 td Д-р !{val._doctorFirstName} !{val._doctorLastName}
+                                td !{val._doctorRegNumber}
+                                td !{val._doctorSpeciality}                                
                                 td !{val._expirationDate}
-                                td !{val._content}
+                                td !{val._content}                                
 
     script(src="./static/scripts/requester.js")
     script(src="./static/scripts/recipe-search.js")

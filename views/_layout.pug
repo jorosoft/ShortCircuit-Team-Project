@@ -21,7 +21,7 @@ html(lang="bg")
                     ul(class="nav navbar-nav")
 
                         //- if user is doctor
-                        if true
+                        if result.isDoctor
                             li(class="dropdown")
                                 a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown) Лекар
                                     span(class="caret")
@@ -40,7 +40,7 @@ html(lang="bg")
                                         a(href="#") Моите пациенти                          
 
                         //- if user is patient
-                        if true
+                        if result.isPatient
                             li(class="dropdown")
                                 a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown) Пациент
                                     span(class="caret")
