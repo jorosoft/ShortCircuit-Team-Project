@@ -1,0 +1,30 @@
+extends ../_layout
+
+block page-title
+    title !{result.title}
+
+block content
+    .col-md-3.col-md-offset-3
+        .panel.panel-default
+            .panel-heading Справка за рецепти
+            .panel-body
+                form(method="post")
+                    .form-group.input-group.input-group
+                        span(class="input-group-addon" id="sizing-addon3")
+                            span(class="glyphicon glyphicon-user")
+                        input(type="text" id="pin" class="form-control" name="pin" placeholder="ЕГН" aria-describedby="sizing-addon3")
+                
+                    .form-group
+                        button(id="btnRecipeCheck" class="btn btn-info btn-block") Търси
+
+    .col-md-6.col-md-offset-3        
+        if result.recipes
+            .recipes
+                p Издадени рецепти за: 
+                    strong !{result._patientFirstName}  !{result._patientLastName}
+                ul
+                    each val in result.recipes
+                        li Д-р !{val._doctorFirstName} !{val._doctorLastName}  !{val._content} !{val._expirationDate}
+
+    script(src="./static/scripts/requester.js")
+    script(src="./static/scripts/recipe-search.js")

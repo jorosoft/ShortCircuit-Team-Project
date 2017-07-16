@@ -76,7 +76,7 @@ module.exports = function(data, models, validator) {
                     res.send(JSON.stringify(doctors));
                 });
         },
-        getReciepesSearch(req, res) {
+        getRecipesSearchView(req, res) {
             const result = {};
             result.title = 'Справка рецепти';
 
@@ -84,7 +84,56 @@ module.exports = function(data, models, validator) {
                 result.user = req.user.username;
             }
 
-            res.render('home/reciepes-search-view', { result });
+            res.render('home/recipes-search-view', { result });
+        },
+        recipesSearch(req, res) {
+            const pin = req.body.pin;
+            const result = {};
+
+            data.getPatient({ _pin: pin })
+                .then((patient) => {
+                    if (!patient) {
+                        return Promise.reject('NOOO');
+                    }
+
+                    return Promise.all([
+                        data.findUserById(patient._userId),
+                        data.findRecipes(patient._id),
+                    ]);
+                })
+                .then(([user, recipes]) => {
+                    result._patientFirstName = user._firstName;
+                    result._patientLastName = user._lastName;
+                    result.recipes = recipes;
+                    result.title = 'Справка рецепти';
+
+                    if (req.isAuthenticated()) {
+                        result.user = req.user.username;
+                    }
+
+                    return Promise.all([
+                        data.getUsers(),
+                        data.getDoctors(),
+                    ]);
+                })
+                .then(([users, doctors]) => {
+                    result.recipes.forEach((recipe) => {
+                        doctors.forEach((doc) => {
+                            users.forEach((user) => {
+                                if (doc._userId.toString() ===
+                                    user._id.toString()) {
+                                    recipe._doctorFirstName = user._firstName;
+                                    recipe._doctorLastName = user._lastName;
+                                }
+                            });
+                        });
+                    });
+
+                    res.render('home/recipes-search-view', { result });
+                })
+                .catch((err) => {
+                    res.render('home/recipes-search-view', { result });
+                });
         },
     };
 };

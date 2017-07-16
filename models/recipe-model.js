@@ -1,5 +1,5 @@
 module.exports = function(constants, validator) {
-    class Reciepe {
+    class Recipe {
         constructor(doctorId, patientId, expirationDate, content) {
             this.doctorId = doctorId;
             this.patientId = patientId;
@@ -41,8 +41,8 @@ module.exports = function(constants, validator) {
     }
 
     return {
-        getReciepe(doctorId, patientId, expirationDate, content) {
-            return new Reciepe(doctorId, patientId, expirationDate, content);
+        getRecipe(doctorId, patientId, expirationDate, content) {
+            return new Recipe(doctorId, patientId, expirationDate, content);
         },
     };
 };
