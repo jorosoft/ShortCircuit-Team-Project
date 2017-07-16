@@ -21,5 +21,11 @@ module.exports = function(data, models, validator) {
 
             res.render('patient/reservation-view', { result });
         },
+        getResults(req, res) {
+            const result = init(req, {});
+            result.title = 'Резултатти от изслевания';
+
+            res.render('patient/results-view', { result });
+        },
     };
 };

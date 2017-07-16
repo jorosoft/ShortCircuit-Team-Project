@@ -21,5 +21,35 @@ module.exports = function(data, models, validator) {
 
             res.render('doctor/add-patient-view', { result });
         },
+        getAddRecipeForm(req, res) {
+            const result = init(req, {});
+            result.title = 'Добавяне на рецепта';
+
+            res.render('doctor/add-recipe-view', { result });
+        },
+        getAddResultForm(req, res) {
+            const result = init(req, {});
+            result.title = 'Добавяне на резултат';
+
+            res.render('doctor/add-result-view', { result });
+        },
+        getScheduleSchema(req, res) {
+            const result = init(req, {});
+            result.title = 'Приемни часове';
+
+            res.render('doctor/schedule-schema-view', { result });
+        },
+        getSchedule(req, res) {
+            const result = init(req, {});
+            result.title = 'Седмичен график';
+
+            res.render('doctor/schedule-view', { result });
+        },
+        getGetPatientsList(req, res) {
+            const result = init(req, {});
+            result.title = 'Моите пациенти';
+
+            res.render('doctor/patients-list-view', { result });
+        },
     };
 };

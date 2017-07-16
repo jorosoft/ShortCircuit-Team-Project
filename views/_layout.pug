@@ -27,17 +27,17 @@ html(lang="bg")
                                     span(class="caret")
                                 ul(class="dropdown-menu")
                                     li
-                                        a(href="./addPatient") Добави пациент
+                                        a(href="./add-patient") Добави пациент
                                     li
-                                        a(href="#") Добави рецепта
+                                        a(href="./add-recipe") Добави рецепта
                                     li
-                                        a(href="#") Добави резултат
+                                        a(href="./add-result") Добави резултат
                                     li
-                                        a(href="#") Моето приемно време
+                                        a(href="./schedule-schema") Моето приемно време
                                     li
-                                        a(href="#") Моят график
+                                        a(href="./schedule") Моят график
                                     li
-                                        a(href="#") Моите пациенти                          
+                                        a(href="./patients-list") Моите пациенти                          
 
                         //- if user is patient
                         if result.isPatient
@@ -48,7 +48,7 @@ html(lang="bg")
                                     li
                                         a(href="./reservation") Резервация за преглед
                                     li
-                                        a(href="#") Моите резултати
+                                        a(href="./show-results") Моите резултати
                         //- 
 
                         li

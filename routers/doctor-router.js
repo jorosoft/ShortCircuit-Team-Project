@@ -7,7 +7,12 @@ module.exports = function(app, data, models, validator) {
     const router = new express.Router();
 
     router
-        .get('/addPatient', controller.getAddPatientForm);
+        .get('/add-patient', controller.getAddPatientForm)
+        .get('/add-recipe', controller.getAddRecipeForm)
+        .get('/add-result', controller.getAddResultForm)
+        .get('/schedule-schema', controller.getScheduleSchema)
+        .get('/schedule', controller.getSchedule)
+        .get('/patients-list', controller.getGetPatientsList);
 
     app.use('/', router);
 };
