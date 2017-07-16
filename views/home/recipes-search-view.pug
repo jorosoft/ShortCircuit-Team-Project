@@ -22,9 +22,18 @@ block content
             .recipes
                 p Издадени рецепти за: 
                     strong !{result._patientFirstName}  !{result._patientLastName}
-                ul
-                    each val in result.recipes
-                        li Д-р !{val._doctorFirstName} !{val._doctorLastName}  !{val._content} !{val._expirationDate}
+                table(class="table")
+                    thead
+                        tr
+                            th Издател
+                            th Валидна до
+                            th Съдържание
+                    tbody                
+                        each val in result.recipes
+                            tr
+                                td Д-р !{val._doctorFirstName} !{val._doctorLastName}
+                                td !{val._expirationDate}
+                                td !{val._content}
 
     script(src="./static/scripts/requester.js")
     script(src="./static/scripts/recipe-search.js")

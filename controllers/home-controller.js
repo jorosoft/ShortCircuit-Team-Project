@@ -118,6 +118,8 @@ module.exports = function(data, models, validator) {
                 })
                 .then(([users, doctors]) => {
                     result.recipes.forEach((recipe) => {
+                        recipe._expirationDate = recipe._expirationDate
+                            .toLocaleDateString();
                         doctors.forEach((doc) => {
                             users.forEach((user) => {
                                 if (doc._userId.toString() ===
