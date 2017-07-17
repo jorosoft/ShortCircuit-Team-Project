@@ -40,6 +40,14 @@ data.addUser(user)
 
 // /////////////////////////////////////////////////////////
 
+user = models.getUser('joro', '1234', 'Живко', 'Иванов', 'patientType');
+
+data.addUser(user)
+    .then((userId) => {
+        const patient = models.getPatient(userId, '7777777777');
+        data.addPatient(patient);
+    });
+
 user = models.getUser('gosho', '1111', 'Георги', 'Димитров', 'patientType');
 
 data.addUser(user)
@@ -61,6 +69,21 @@ data.addUser(user)
             doctorId, patientId, new Date('2017-12-12'), 'content....... ');
 
         data.addRecipe(recipe);
+    })
+    .then(() => {
+        return data.getUsers({ username: 'pena' });
+    })
+    .then((usr) => {
+        return Promise.all([data.getDoctors({ _userId: usr[0]._id }),
+            data.getPatient({ _pin: '1212121212' }),
+            data.getPatient({ _pin: '7777777777' }),
+        ]);
+    })
+    .then(([doc, pat1, pat2]) => {
+        pat1._doctorId = doc[0]._id;
+        pat2._doctorId = doc[0]._id;
+        data.updatePatient(pat1);
+        data.updatePatient(pat2);
     });
 
 // ////////////////////////////////////////////////

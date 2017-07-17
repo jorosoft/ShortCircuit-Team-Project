@@ -48,8 +48,30 @@ module.exports = function(data, models, validator) {
         getGetPatientsList(req, res) {
             const result = init(req, {});
             result.title = 'Моите пациенти';
+            const userId = req.user._id;
 
-            res.render('doctor/patients-list-view', { result });
+            data.getDoctors({ _userId: userId })
+                .then((doc) => {
+                    return Promise.all([
+                        data.getPatients({ _doctorId: doc[0]._id }),
+                        data.getUsers({ _userType: 'patientType' }),
+                    ]);
+                })
+                .then(([patients, users]) => {
+                    patients.forEach((patient) => {
+                        users.forEach((user) => {
+                            if (patient._userId.toString() ===
+                                user._id.toString()) {
+                                patient._firstName = user._firstName;
+                                patient._lastName = user._lastName;
+                            }
+                        });
+                    });
+
+                    result.patients = patients;
+
+                    res.render('doctor/patients-list-view', { result });
+                });
         },
     };
 };

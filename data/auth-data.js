@@ -22,8 +22,11 @@ module.exports = function(repository, models) {
                     return repository.add('users', user);
                 });
         },
-        getUsers() {
-            return repository.find('users', {});
+        getUsers(filter) {
+            return repository.find('users', filter);
+        },
+        updateUser(user) {
+            return repository.update('users', user);
         },
     };
 };

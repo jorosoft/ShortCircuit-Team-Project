@@ -34,7 +34,7 @@ module.exports = function(data, models, validator) {
             res.render('home/personal-doctors-view', { result });
         },
         getPersonalDoctors(req, res) {
-            Promise.all([data.getUsers(),
+            Promise.all([data.getUsers({}),
                     data.getDoctors({ _hasPatients: true }),
                 ])
                 .then(([users, doctors]) => {
@@ -58,7 +58,7 @@ module.exports = function(data, models, validator) {
             res.render('home/doctors-view', { result });
         },
         getDoctors(req, res) {
-            Promise.all([data.getUsers(),
+            Promise.all([data.getUsers({}),
                     data.getDoctors({ _hasPatients: false }),
                 ])
                 .then(([users, doctors]) => {
@@ -107,7 +107,7 @@ module.exports = function(data, models, validator) {
                     }
 
                     return Promise.all([
-                        data.getUsers(),
+                        data.getUsers({}),
                         data.getDoctors(),
                     ]);
                 })

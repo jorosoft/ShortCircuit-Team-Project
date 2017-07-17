@@ -7,4 +7,6 @@ block content
     .panel.panel-default
         .panel-heading Моите пациенти
         .panel-body
-            p ......
+            ul
+                each val in result.patients
+                    li !{val._pin} !{val._firstName} !{val._lastName}

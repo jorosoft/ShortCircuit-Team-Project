@@ -6,5 +6,8 @@ module.exports = function(repository, models) {
         findRecipes(patientId) {
             return repository.find('recipes', { _patientId: patientId });
         },
+        updateRecipe(recipe) {
+            return repository.update('recipes', recipe);
+        },
     };
 };

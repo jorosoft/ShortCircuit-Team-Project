@@ -6,5 +6,11 @@ module.exports = function(repository, models) {
         getPatient(filter) {
             return repository.findOne('patients', filter);
         },
+        getPatients(filter) {
+            return repository.find('patients', filter);
+        },
+        updatePatient(patient) {
+            return repository.update('patients', patient);
+        },
     };
 };

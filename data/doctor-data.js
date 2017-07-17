@@ -6,5 +6,8 @@ module.exports = function(repository, models) {
         getDoctors(filter) {
             return repository.find('doctors', filter);
         },
+        updateDoctor(doctor) {
+            return repository.update('doctors', doctor);
+        },
     };
 };
