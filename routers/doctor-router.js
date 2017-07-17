@@ -11,6 +11,7 @@ module.exports = function(app, data, models, validator) {
         .get('/add-recipe', controller.getAddRecipeForm)
         .get('/add-result', controller.getAddResultForm)
         .get('/schedule-schema', controller.getScheduleSchema)
+        .post('/schedule-schema', controller.setScheduleSchema)
         .get('/schedule', controller.getSchedule)
         .get('/patients-list', controller.getGetPatientsList);
 

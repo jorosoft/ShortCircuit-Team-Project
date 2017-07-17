@@ -4,7 +4,147 @@ block page-title
     title !{result.title}
 
 block content
-    .panel.panel-default
-        .panel-heading Приемно време
-        .panel-body
-            p ......
+    .col-md-5.col-md-offset-3
+        .panel.panel-default
+            .panel-heading Приемно време
+            .panel-body
+                if !result._hasSchema
+                    .alert.alert-danger Нямате дефинирано премно време към момента! 
+                p Моля, изберете начален и краен час за всеки ден и потвърдете за да запазите схемата!
+                p 
+                    form(action="/schedule-schema" method="post")
+                        table(class="table table-striped")
+                            thead
+                                tr
+                                    th Ден
+                                    th От
+                                    th До    
+                            tbody
+                            -const defaultSchema = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+                                tr
+                                    td Понеделник
+                                    td
+                                        select(name="mondayBegin")
+                                            each val in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.monday.begin === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    option !{val}:00 
+                                    td
+                                        select(name="mondayEnd")
+                                            each val, index in defaultSchema 
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.monday.end === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else                                               
+                                                    if index === defaultSchema.length - 1
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                tr
+                                    td Вторник
+                                    td
+                                        select(name="tuesdayBegin")
+                                            each val in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.tuesday.begin === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    option !{val}:00 
+                                    td
+                                        select(name="tuesdayEnd")
+                                            each val, index in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.tuesday.end === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    if index === defaultSchema.length - 1
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                tr
+                                    td Сряда
+                                    td
+                                        select(name="wednesdayBegin")
+                                            each val in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.wednesday.begin === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    option !{val}:00 
+                                    td
+                                        select(name="wednesdayEnd")
+                                            each val, index in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.wednesday.end === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    if index === defaultSchema.length - 1
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                tr
+                                    td Четвъртък
+                                    td
+                                        select(name="thursdayBegin")
+                                            each val in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.thursday.begin === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    option !{val}:00 
+                                    td
+                                        select(name="thursdayEnd")
+                                            each val, index in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.thursday.end === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    if index === defaultSchema.length - 1
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                tr
+                                    td Петък
+                                    td
+                                        select(name="fridayBegin")
+                                            each val in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.friday.begin === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    option !{val}:00 
+                                    td
+                                        select(name="fridayEnd")
+                                            each val, index in defaultSchema
+                                                if result._hasSchema
+                                                    if result._scheduleSchema.friday.end === val
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                                                else
+                                                    if index === defaultSchema.length - 1
+                                                        option(selected) !{val}:00
+                                                    else
+                                                        option !{val}:00
+                        button(type="submit" class="btn btn-primary center-block") Потвърди
+            

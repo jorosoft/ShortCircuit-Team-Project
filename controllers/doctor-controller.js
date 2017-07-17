@@ -35,9 +35,67 @@ module.exports = function(data, models, validator) {
         },
         getScheduleSchema(req, res) {
             const result = init(req, {});
-            result.title = 'Приемни часове';
+            result.title = 'Приемно време';
+            const userId = req.user._id;
+            data.getDoctors({ _userId: userId })
+                .then((doc) => {
+                    if (doc[0].hasOwnProperty('_scheduleSchema')) {
+                        result._hasSchema = true;
+                        result._scheduleSchema = doc[0]._scheduleSchema;
+                    } else {
+                        result._hasSchema = false;
+                    }
 
-            res.render('doctor/schedule-schema-view', { result });
+                    res.render('doctor/schedule-schema-view', { result });
+                });
+        },
+        setScheduleSchema(req, res) {
+            const mondayBegin = +req.body.mondayBegin
+                .substring(0, req.body.mondayBegin.length - 3);
+            const mondayEnd = +req.body.mondayEnd
+                .substring(0, req.body.mondayEnd.length - 3);
+            const tuesdayBegin = +req.body.tuesdayBegin
+                .substring(0, req.body.tuesdayBegin.length - 3);
+            const tuesdayEnd = +req.body.tuesdayEnd
+                .substring(0, req.body.tuesdayEnd.length - 3);
+            const wednesdayBegin = +req.body.wednesdayBegin
+                .substring(0, req.body.wednesdayBegin.length - 3);
+            const wednesdayEnd = +req.body.wednesdayEnd
+                .substring(0, req.body.wednesdayEnd.length - 3);
+            const thursdayBegin = +req.body.thursdayBegin
+                .substring(0, req.body.thursdayBegin.length - 3);
+            const thursdayEnd = +req.body.thursdayEnd
+                .substring(0, req.body.thursdayEnd.length - 3);
+            const fridayBegin = +req.body.fridayBegin
+                .substring(0, req.body.fridayBegin.length - 3);
+            const fridayEnd = +req.body.fridayEnd
+                .substring(0, req.body.fridayEnd.length - 3);
+            const isValidSchema = (mondayBegin < mondayEnd) &&
+                (tuesdayBegin < tuesdayEnd) &&
+                (wednesdayBegin < wednesdayEnd) &&
+                (thursdayBegin < thursdayEnd) &&
+                (fridayBegin < fridayEnd);
+
+            if (!isValidSchema) {
+                throw new Error('Невалидна схема!');
+            }
+
+            const schema = {
+                monday: { begin: mondayBegin, end: mondayEnd },
+                tuesday: { begin: tuesdayBegin, end: tuesdayEnd },
+                wednesday: { begin: wednesdayBegin, end: wednesdayEnd },
+                thursday: { begin: thursdayBegin, end: thursdayEnd },
+                friday: { begin: fridayBegin, end: fridayEnd },
+            };
+            const userId = req.user._id;
+
+            data.getDoctors({ _userId: userId })
+                .then((doc) => {
+                    doc[0]._scheduleSchema = schema;
+
+                    return data.updateDoctor(doc[0]);
+                })
+                .then(() => res.redirect('/'));
         },
         getSchedule(req, res) {
             const result = init(req, {});
