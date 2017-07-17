@@ -16,9 +16,6 @@ module.exports = function(constants) {
 
                         db.close();
 
-                        return entity;
-                    })
-                    .then((entity) => {
                         resolve(entity || null);
                     });
             });
@@ -32,9 +29,6 @@ module.exports = function(constants) {
 
                         db.close();
 
-                        return entities;
-                    })
-                    .then((entities) => {
                         resolve(entities || null);
                     });
             });
@@ -47,9 +41,8 @@ module.exports = function(constants) {
 
                         db.close();
 
-                        return entity._id;
-                    })
-                    .then(resolve);
+                        resolve(entity._id);
+                    });
             });
         },
         update(collection, entity) {
@@ -61,8 +54,9 @@ module.exports = function(constants) {
                                 entity, { upsert: true });
 
                         db.close();
-                    })
-                    .then(resolve);
+
+                        resolve();
+                    });
             });
         },
     };
