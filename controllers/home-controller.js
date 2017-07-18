@@ -90,9 +90,10 @@ module.exports = function(data, models, validator) {
             const errors = req.validationErrors();
 
             if (errors) {
-                result.flash = { type: 'alert-danger', messages: errors };
-
+                result.flash = { messages: errors };
                 res.render('home/recipes-search-view', { result });
+
+                return;
             }
 
             data.getPatient({ _pin: pin })
