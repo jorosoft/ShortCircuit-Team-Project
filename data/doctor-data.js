@@ -3,6 +3,9 @@ module.exports = function(repository, models) {
         addDoctor(doctor) {
             return repository.add('doctors', doctor);
         },
+        getDoctor(filter) {
+            return repository.findOne('doctors', filter);
+        },
         getDoctors(filter) {
             return repository.find('doctors', filter);
         },

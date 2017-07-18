@@ -23,7 +23,7 @@ module.exports = function(data, models, validator) {
         },
         getResults(req, res) {
             const result = init(req, {});
-            result.title = 'Резултатти от изслевания';
+            result.title = 'Резултати от изслевания';
 
             res.render('patient/results-view', { result });
         },

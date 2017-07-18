@@ -1,9 +1,10 @@
 module.exports = function(constants, validator) {
     class Result {
-        constructor(doctorId, patientId, content) {
+        constructor(doctorId, patientId, content, date) {
             this.doctorId = doctorId;
             this.patientId = patientId;
             this.content = content;
+            this.date = date;
         }
 
         get doctorId() {
@@ -29,11 +30,19 @@ module.exports = function(constants, validator) {
         set content(value) {
             this._content = value;
         }
+
+        get date() {
+            return this._date;
+        }
+
+        set date(value) {
+            this._date = value;
+        }
     }
 
     return {
-        getResult(doctorId, patientId, content) {
-            return new Result(doctorId, patientId, content);
+        getResult(doctorId, patientId, content, date) {
+            return new Result(doctorId, patientId, content, date);
         },
     };
 };

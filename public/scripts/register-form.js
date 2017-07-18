@@ -21,7 +21,7 @@ function showDoctorForm() {
                 <span class="glyphicon glyphicon-record"></span>
             </span>
             <input type="text" class="form-control" name="regNumber" 
-                placeholder="Рег. номер" aria-describedby="sizing-addon3" />
+                placeholder="УИН" aria-describedby="sizing-addon3" />
     </div>`);
     const $speciality = $(`<div class="form-group input-group input-group-sm">
             <span class="input-group-addon" id="sizing-addon3">

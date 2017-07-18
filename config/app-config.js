@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
 
 module.exports = function(data) {
@@ -20,6 +21,7 @@ module.exports = function(data) {
         resave: true,
         saveUninitialized: true,
     }));
+    app.use(expressValidator());
 
     require('./passport-config')(app, data);
 

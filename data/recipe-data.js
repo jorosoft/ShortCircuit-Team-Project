@@ -3,8 +3,11 @@ module.exports = function(repository, models) {
         addRecipe(recipe) {
             return repository.add('recipes', recipe);
         },
-        findRecipes(patientId) {
-            return repository.find('recipes', { _patientId: patientId });
+        getrecipe(filter) {
+            return repository.findOne('recipes', filter);
+        },
+        getRecipes(filter) {
+            return repository.find('recipes', filter);
         },
         updateRecipe(recipe) {
             return repository.update('recipes', recipe);

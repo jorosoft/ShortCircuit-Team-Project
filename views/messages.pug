@@ -1,0 +1,7 @@
+if result.flash
+  div.alert(class='alert-danger alert-small')
+    ul
+    - for (var i = 0; i < result.flash.messages.length; i++) {
+        li #{result.flash.messages[i].msg}
+    - }
+    ul

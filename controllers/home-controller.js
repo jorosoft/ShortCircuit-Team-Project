@@ -84,6 +84,16 @@ module.exports = function(data, models, validator) {
         recipesSearch(req, res) {
             const pin = req.body.pin;
             const result = init(req, {});
+            result.title = 'Справка рецепти';
+
+            req.checkBody('pin', 'ЕГН е необходим!').notEmpty();
+            const errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { type: 'alert-danger', messages: errors };
+
+                res.render('home/recipes-search-view', { result });
+            }
 
             data.getPatient({ _pin: pin })
                 .then((patient) => {
@@ -93,7 +103,7 @@ module.exports = function(data, models, validator) {
 
                     return Promise.all([
                         data.findUserById(patient._userId),
-                        data.findRecipes(patient._id),
+                        data.getRecipes({ _patientId: patient._id }),
                     ]);
                 })
                 .then(([user, recipes]) => {
