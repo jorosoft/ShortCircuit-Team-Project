@@ -4,7 +4,25 @@ block page-title
     title !{result.title}
 
 block content
-    .panel.panel-default
-        .panel-heading Седмичен график
-        .panel-body
-            p ......
+    .col-md-10.col-md-offset-1
+        .panel.panel-default
+            .panel-heading Седмичен график
+            .panel-body
+                table(class="table table-striped")
+                    thead
+                        tr
+                            th Час
+                            th Понеделник
+                            th Вторник
+                            th Сряда
+                            th Четвъртък
+                            th Петък
+                    tbody
+                        each val in result._defaultSchema
+                            tr
+                                td !{val}:00
+                                td
+                                td
+                                td
+                                td
+                                td

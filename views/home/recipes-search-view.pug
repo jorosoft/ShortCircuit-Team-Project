@@ -4,7 +4,7 @@ block page-title
     title !{result.title}
 
 block content
-    .col-md-3.col-md-offset-3
+    .col-md-3.col-md-offset-4
         .panel.panel-default
             .panel-heading Справка за рецепти
             .panel-body
@@ -16,28 +16,29 @@ block content
                     include ../error-messages
                     .form-group
                         button(id="btnRecipeCheck" class="btn btn-info btn-block") Търси
-
-    .col-md-6.col-md-offset-3        
-        if result.recipes
-            .recipes
-                p Издадени рецепти за: 
+    if result.recipes
+        .col-md-7.col-md-offset-2
+            .panel.panel-default
+                .panel-heading Издадени рецепти за: 
                     strong !{result._patientFirstName}  !{result._patientLastName}
-                table(class="table table-striped")
-                    thead
-                        tr
-                            th Издател
-                            th УИН
-                            th Специалност
-                            th Валидна до
-                            th Съдържание
-                    tbody                
-                        each val in result.recipes
-                            tr
-                                td Д-р !{val._doctorFirstName} !{val._doctorLastName}
-                                td !{val._doctorRegNumber}
-                                td !{val._doctorSpeciality}                                
-                                td !{val._expirationDate}
-                                td !{val._content}                                
+                .panel-body                
+                    .recipes                    
+                        table(class="table table-striped")
+                            thead
+                                tr
+                                    th Издател
+                                    th УИН
+                                    th Специалност
+                                    th Валидна до
+                                    th Съдържание
+                            tbody                
+                                each val in result.recipes
+                                    tr
+                                        td д-р !{val._doctorFirstName} !{val._doctorLastName}
+                                        td !{val._doctorRegNumber}
+                                        td !{val._doctorSpeciality}                                
+                                        td !{val._expirationDate}
+                                        td !{val._content}                                
     
     script(src="./static/scripts/requester.js")
     script(src="./static/scripts/recipe-search.js")

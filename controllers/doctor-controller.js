@@ -14,6 +14,10 @@ module.exports = function(data, models, validator) {
         return result;
     }
 
+    function getDefaultSchema() {
+        return [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+    }
+
     return {
         getAddPatientForm(req, res) {
             const result = init(req, {});
@@ -45,6 +49,8 @@ module.exports = function(data, models, validator) {
                     } else {
                         result._hasSchema = false;
                     }
+
+                    result._defaultSchema = getDefaultSchema();
 
                     res.render('doctor/schedule-schema-view', { result });
                 });
@@ -100,6 +106,7 @@ module.exports = function(data, models, validator) {
         getSchedule(req, res) {
             const result = init(req, {});
             result.title = 'Седмичен график';
+            result._defaultSchema = getDefaultSchema();
 
             res.render('doctor/schedule-view', { result });
         },

@@ -4,9 +4,19 @@ block page-title
     title !{result.title}
 
 block content
-    .panel.panel-default
-        .panel-heading Моите пациенти
-        .panel-body
-            ul
-                each val in result.patients
-                    li !{val._pin} !{val._firstName} !{val._lastName}
+    .col-md-5.col-md-offset-3
+        .panel.panel-default
+            .panel-heading Моите пациенти
+            .panel-body
+                table(class="table table-striped")
+                    thead
+                        tr
+                            th ЕГН
+                            th Име
+                            th Фамилия
+                    tbody
+                        each val in result.patients
+                            tr
+                                td !{val._pin}
+                                td !{val._firstName}
+                                td !{val._lastName}

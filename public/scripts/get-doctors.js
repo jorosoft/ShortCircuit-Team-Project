@@ -2,9 +2,9 @@
 
 getData('/doctors-all')
     .then((doctors) => {
-        const $ul = $('<ul>');
+        const $ul = $('<ul>').addClass('list-group');
         doctors.result.forEach((doctor) => {
-            const $li = $('<li>');
+            const $li = $('<li>').addClass('list-group-item');
             $li.html(doctor._regNumber + ' ' +
                 doctor._firstName + ' ' +
                 doctor._lastName + ' ' +
