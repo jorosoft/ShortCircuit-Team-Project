@@ -8,6 +8,7 @@ module.exports = function(app, data, models, validator) {
 
     router
         .get('/add-patient', controller.getAddPatientForm)
+        .post('/add-patient', controller.addPatient)
         .get('/add-recipe', controller.getAddRecipeForm)
         .get('/add-result', controller.getAddResultForm)
         .get('/schedule-schema', controller.getScheduleSchema)

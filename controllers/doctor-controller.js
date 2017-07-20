@@ -19,6 +19,27 @@ module.exports = function(data, models, validator) {
     }
 
     return {
+        addPatient(req, res){
+            const egn = req.body.pin;
+            const userId = req.user._id;
+
+            Promise.all(
+                [
+                    data.getPatient({
+                        _pin: egn
+                    }),
+                    data.getDoctor({
+                        _userId: userId
+                    })
+                ]
+            )
+                .then(([patient, doctor]) => {
+                    patient._doctorId = doctor._id;
+                    data.updatePatient(patient);
+                    res.redirect('/');
+            })
+
+        },
         getAddPatientForm(req, res) {
             const result = init(req, {});
             result.title = 'Добавяне на пациент';
