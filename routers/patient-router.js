@@ -8,6 +8,7 @@ module.exports = function(app, data, models, validator) {
 
     router
         .get('/reservation', controller.getReservationForm)
+        .post('/reservation', controller.reservation)
         .get('/show-results', controller.getResults)
         .get('/show-patient-results', controller.getPatientResults);
 

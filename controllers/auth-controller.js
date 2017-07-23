@@ -75,5 +75,8 @@ module.exports = function(data, models, validator) {
 
             res.render('unauthorized-view', { result });
         },
+        getLoggedUser(req, res) {
+            res.send(JSON.stringify({ result: req.user }));
+        },
     };
 };

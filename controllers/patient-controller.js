@@ -1,4 +1,4 @@
-module.exports = function (data, models, validator) {
+module.exports = function(data, models, validator) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;
@@ -21,6 +21,17 @@ module.exports = function (data, models, validator) {
 
             res.render('patient/reservation-view', { result });
         },
+        reservation(req, res) {
+            const reservation = {
+                _doctorId: req.body.doctorId,
+                _userId: req.body.userId,
+                _date: req.body.date,
+                _hour: req.body.hour,
+            };
+
+            data.addReservation(reservation)
+                .then(() => res.redirect('/'));
+        },
         getResults(req, res) {
             const result = init(req, {});
             result.title = 'Резултати от изслевания';
@@ -28,19 +39,17 @@ module.exports = function (data, models, validator) {
             res.render('patient/results-view', { result });
         },
         getPatientResults(req, res) {
-            const result = init(req, {})
+            const result = init(req, {});
             console.log(result);
             data.getPatient({ username: res.user })
                 .then((patient) => {
-                   data.getResults()
-                   console.log(patient);
+                    data.getResults();
+                    console.log(patient);
                 })
                 .then((results) => {
                     res.send(JSON.stringify({ result: results }));
                     console.log(results);
-                })
-
-                
+                });
         },
     };
 };

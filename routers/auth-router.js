@@ -17,7 +17,8 @@ module.exports = function(app, data, models, validator) {
         .post('/register', controller.register)
         .get('/logout', controller.logout)
         .get('/profile', controller.getProfile)
-        .get('/unauthorized', controller.unauthorized);
+        .get('/unauthorized', controller.unauthorized)
+        .get('/user', controller.getLoggedUser);
 
     app.use('/', router);
 };

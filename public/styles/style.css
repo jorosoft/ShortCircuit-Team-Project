@@ -6,3 +6,15 @@
     line-height: 30px;
     padding: 0px 15px;
 }
+
+.well-selected {
+    background-color: #5bc0de;
+}
+
+.well-green {
+    background-color: #5cb85c;
+}
+
+.well-red {
+    background-color: #d9534f;
+}

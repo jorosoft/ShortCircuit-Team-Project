@@ -2,11 +2,16 @@ extends ../_layout
 
 block page-title
     title !{result.title}
+    link(rel="stylesheet", href="./libs/jquery-ui/themes/base/all.css")
 
 block content
     .panel.panel-default
         .panel-heading Резервация на час за преглед
         .panel-body
-            .reservation
+            form(action="./reservation" method="post")
+                .reservation
+                .schedule
             script(src="./static/scripts/requester.js")
             script(src="./static/scripts/reservation-form.js")
+            script(src="./libs/jquery-ui/ui/widgets/datepicker.js")
+            script(src="./libs/jquery-ui/ui/i18n/datepicker-bg.js")

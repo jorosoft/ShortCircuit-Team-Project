@@ -19,26 +19,25 @@ module.exports = function(data, models, validator) {
     }
 
     return {
-        addPatient(req, res){
+        addPatient(req, res) {
             const egn = req.body.pin;
             const userId = req.user._id;
 
             Promise.all(
-                [
-                    data.getPatient({
-                        _pin: egn
-                    }),
-                    data.getDoctor({
-                        _userId: userId
-                    })
-                ]
-            )
+                    [
+                        data.getPatient({
+                            _pin: egn,
+                        }),
+                        data.getDoctor({
+                            _userId: userId,
+                        }),
+                    ]
+                )
                 .then(([patient, doctor]) => {
                     patient._doctorId = doctor._id;
                     data.updatePatient(patient);
                     res.redirect('/');
-            })
-
+                });
         },
         getAddPatientForm(req, res) {
             const result = init(req, {});
@@ -157,6 +156,16 @@ module.exports = function(data, models, validator) {
                     result.patients = patients;
 
                     res.render('doctor/patients-list-view', { result });
+                });
+        },
+        getreservations(req, res) {
+            const params = req.params.params.split(';');
+            const doctorId = params[0].split('=')[1];
+            const date = params[1].split('=')[1];
+
+            data.getReservations({ _doctorId: doctorId, _date: date })
+                .then((reservations) => {
+                    res.send({ result: reservations });
                 });
         },
     };
