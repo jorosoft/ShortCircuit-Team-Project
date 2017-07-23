@@ -1,3 +1,5 @@
+/* globals $ getData */
+
 getData('/show-patient-results')
     .then((res) => {
         const $ul = $('<ul>').addClass('list-group');

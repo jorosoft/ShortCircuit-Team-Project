@@ -14,7 +14,8 @@ module.exports = function(app, data, models, validator) {
         .get('/schedule-schema', controller.getScheduleSchema)
         .post('/schedule-schema', controller.setScheduleSchema)
         .get('/schedule', controller.getSchedule)
-        .get('/patients-list', controller.getGetPatientsList);
+        .get('/patients-list', controller.getGetPatientsList)
+        .post('/add-patient-result', controller.addResult);
 
     app.use('/', router);
 };
