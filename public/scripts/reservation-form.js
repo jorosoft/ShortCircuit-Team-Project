@@ -181,7 +181,7 @@ Promise.all([
                         .attr('placeholder', 'Изберете дата')
                         .appendTo($($selectPanel));
                     $(function() {
-                        $('#datepicker').datepicker();
+                        $('#datepicker').datepicker({ minDate: 0 });
                     });
 
                     $('#datepicker').on('change', (ev) => {

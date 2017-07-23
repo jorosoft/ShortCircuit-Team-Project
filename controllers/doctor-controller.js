@@ -138,6 +138,25 @@ module.exports = function(data, models, validator) {
             const result = init(req, {});
             result.title = 'Седмичен график';
             result._defaultSchema = getDefaultSchema();
+            const today = new Date(Date.UTC());
+            const day = today.getDay();
+
+            // TODO: Get start and end date of week for filter
+
+            let dd = today.getDate();
+            let mm = today.getMonth() + 1;
+            const yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            const date = dd + '.' + mm + '.' + yyyy;
+
+            console.log(date);
 
             res.render('doctor/schedule-view', { result });
         },
