@@ -39,10 +39,9 @@ module.exports = function(data, models, validator) {
             res.render('patient/results-view', { result });
         },
         getPatientResults(req, res) {
-            const result = init(req, {});
-            console.log(result);
             data.getPatient({ username: res.user })
                 .then((patient) => {
+<<<<<<< .mine
                     data.getResults();
                     console.log(patient);
                 })
@@ -50,6 +49,15 @@ module.exports = function(data, models, validator) {
                     res.send(JSON.stringify({ result: results }));
                     console.log(results);
                 });
+=======
+                    data.getResults({ _patientId: patient._id })
+                        .then((results) => {
+                            res.send(JSON.stringify({ result: results }));
+                        });
+                });
+
+
+>>>>>>> .theirs
         },
     };
 };

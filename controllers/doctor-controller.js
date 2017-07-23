@@ -1,4 +1,4 @@
-module.exports = function(data, models, validator) {
+module.exports = function (data, models, validator) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;
@@ -24,6 +24,7 @@ module.exports = function(data, models, validator) {
             const userId = req.user._id;
 
             Promise.all(
+<<<<<<< .mine
                     [
                         data.getPatient({
                             _pin: egn,
@@ -33,6 +34,17 @@ module.exports = function(data, models, validator) {
                         }),
                     ]
                 )
+=======
+                [
+                    data.getPatient({
+                        _pin: egn,
+                    }),
+                    data.getDoctor({
+                        _userId: userId,
+                    }),
+                ]
+            )
+>>>>>>> .theirs
                 .then(([patient, doctor]) => {
                     patient._doctorId = doctor._id;
                     data.updatePatient(patient);
@@ -56,6 +68,17 @@ module.exports = function(data, models, validator) {
             result.title = 'Добавяне на резултат';
 
             res.render('doctor/add-result-view', { result });
+        },
+        addResult(req, res) {
+            const pin = req.body.pin;
+            const content = req.body.content;
+
+            data.getPatient({ _pin: pin })
+                .then((pat) => {
+                    const result = models.getResult(
+                        pat._doctorId, pat._id, content, new Date(Date.now()));
+                    data.addResult(result);
+                });
         },
         getScheduleSchema(req, res) {
             const result = init(req, {});
