@@ -41,23 +41,11 @@ module.exports = function(data, models, validator) {
         getPatientResults(req, res) {
             data.getPatient({ username: res.user })
                 .then((patient) => {
-<<<<<<< .mine
-                    data.getResults();
-                    console.log(patient);
-                })
-                .then((results) => {
-                    res.send(JSON.stringify({ result: results }));
-                    console.log(results);
-                });
-=======
                     data.getResults({ _patientId: patient._id })
                         .then((results) => {
                             res.send(JSON.stringify({ result: results }));
                         });
                 });
-
-
->>>>>>> .theirs
         },
     };
 };

@@ -15,7 +15,7 @@ module.exports = function(app, data, models, validator) {
         .post('/schedule-schema', controller.setScheduleSchema)
         .get('/schedule', controller.getSchedule)
         .get('/patients-list', controller.getGetPatientsList)
-        .post('/add-patient-result', controller.addResult);
+        .post('/add-patient-result', controller.addResult)
         .get('/patients-list', controller.getGetPatientsList)
         .get('/reservations/:params', controller.getreservations);
 

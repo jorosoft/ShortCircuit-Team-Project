@@ -1,4 +1,4 @@
-module.exports = function (data, models, validator) {
+module.exports = function(data, models, validator) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;
@@ -24,7 +24,6 @@ module.exports = function (data, models, validator) {
             const userId = req.user._id;
 
             Promise.all(
-<<<<<<< .mine
                     [
                         data.getPatient({
                             _pin: egn,
@@ -34,17 +33,6 @@ module.exports = function (data, models, validator) {
                         }),
                     ]
                 )
-=======
-                [
-                    data.getPatient({
-                        _pin: egn,
-                    }),
-                    data.getDoctor({
-                        _userId: userId,
-                    }),
-                ]
-            )
->>>>>>> .theirs
                 .then(([patient, doctor]) => {
                     patient._doctorId = doctor._id;
                     data.updatePatient(patient);
