@@ -29,18 +29,14 @@ module.exports = function (data, models, validator) {
         },
         getPatientResults(req, res) {
             const result = init(req, {})
-            console.log(result);
+
             data.getPatient({ username: res.user })
                 .then((patient) => {
-                   data.getResults()
-                   console.log(patient);
+                    data.getResults({ _patientId: patient._id })
+                        .then((results) => {
+                            res.send(JSON.stringify({ result: results }));
+                        })
                 })
-                .then((results) => {
-                    res.send(JSON.stringify({ result: results }));
-                    console.log(results);
-                })
-
-                
         },
     };
 };
