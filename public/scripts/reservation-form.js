@@ -44,7 +44,11 @@ function getDayName(date) {
 }
 
 function getReservations(doctorId, date) {
-    return getData('/reservations/doctorId=' + doctorId + ';date=' + date);
+    const dateParts = date.split('.');
+    const newDate =
+        new Date(dateParts[2], dateParts[1] - 1, dateParts[0], 12, 0, 0, 0);
+
+    return getData('/reservations/doctorId=' + doctorId + ';date=' + newDate);
 }
 
 function renderDoctorSchedule(doctor, date) {

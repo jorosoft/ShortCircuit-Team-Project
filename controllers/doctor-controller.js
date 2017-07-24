@@ -192,8 +192,9 @@ module.exports = function(data, models, validator) {
             const params = req.params.params.split(';');
             const doctorId = params[0].split('=')[1];
             const date = params[1].split('=')[1];
+            const searchedDate = new Date(date);
 
-            data.getReservations({ _doctorId: doctorId, _date: date })
+            data.getReservations({ _doctorId: doctorId, _date: searchedDate })
                 .then((reservations) => {
                     res.send({ result: reservations });
                 });
