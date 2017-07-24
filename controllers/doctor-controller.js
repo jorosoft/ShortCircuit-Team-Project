@@ -138,25 +138,32 @@ module.exports = function(data, models, validator) {
             const result = init(req, {});
             result.title = 'Седмичен график';
             result._defaultSchema = getDefaultSchema();
-            const today = new Date(Date.UTC());
+            const today = new Date();
             const day = today.getDay();
+            let startOffset;
 
-            // TODO: Get start and end date of week for filter
+            if (day === 0) {
+                startOffset = 1;
+            } else if (day === 6) {
+                startOffset = 2;
+            } else {
+                startOffset = day - 1;
+            }
 
-            let dd = today.getDate();
-            let mm = today.getMonth() + 1;
+            const dd = today.getDate();
+            const mm = today.getMonth() + 1;
             const yyyy = today.getFullYear();
 
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
+            const beginDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
+            beginDate.setDate(beginDate.getDate() - startOffset);
+            const endDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
+            endDate.setDate(endDate.getDate() - startOffset + 4);
 
-            const date = dd + '.' + mm + '.' + yyyy;
+            data.getReservations({})
+                .then((reservations) => {
 
-            console.log(date);
+                });
+
 
             res.render('doctor/schedule-view', { result });
         },
