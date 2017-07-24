@@ -18,7 +18,8 @@ module.exports = function(app, data, models, validator) {
         .get('/logout', controller.logout)
         .get('/profile', controller.getProfile)
         .get('/unauthorized', controller.unauthorized)
-        .get('/user', controller.getLoggedUser);
+        .get('/user', controller.getLoggedUser)
+        .get('/profile/:username', controller.getUserProfile);
 
     app.use('/', router);
 };
