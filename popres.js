@@ -5,7 +5,7 @@ const models = require('./models')(constants, validator);
 const data = require('./data')(repository, models);
 
 Promise.all([data.getPatient({ _pin: '7777777777' }),
-data.getDoctor({ _regNumber: '12345' })
+data.getDoctor({ _regNumber: '12345' }),
 ])
     .then(([pat, doc]) => {
         const result = models.getResult(
