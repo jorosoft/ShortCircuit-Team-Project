@@ -9,14 +9,13 @@ block content
             .panel-heading Седмичен график
             .panel-body
                 table(class="table table-striped")
+                    - const dayNames = ['Понеделник','Вторник','Сряда','Четвъртък','Петък'];
                     thead
                         tr
                             th Час
-                            th Понеделник
-                            th Вторник
-                            th Сряда
-                            th Четвъртък
-                            th Петък
+                            - for(let i = 0; i < 5; i += 1) {
+                                th !{dayNames[i]} !{result.weekDays[i]}
+                            - }
                     tbody
                         each val in result._defaultSchema
                             tr

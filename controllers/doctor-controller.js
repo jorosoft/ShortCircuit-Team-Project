@@ -151,13 +151,25 @@ module.exports = function(data, models, validator) {
             }
 
             const dd = today.getDate();
-            const mm = today.getMonth() + 1;
+            const mm = today.getMonth();
             const yyyy = today.getFullYear();
 
             const beginDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
             beginDate.setDate(beginDate.getDate() - startOffset);
             const endDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
             endDate.setDate(endDate.getDate() - startOffset + 4);
+
+            const weekDays = [];
+            for (let i = 0; i < 5; i += 1) {
+                const date = new Date(beginDate);
+                date.setDate(date.getDate() + i);
+                const dateString = date.getDate() + '.' +
+                    (date.getMonth() + 1) + '.' +
+                    date.getUTCFullYear();
+                weekDays.push(dateString);
+            }
+
+            result.weekDays = weekDays;
 
             data.getDoctor({ _userId: req.user._id })
                 .then((doc) => {
@@ -169,10 +181,11 @@ module.exports = function(data, models, validator) {
                         },
                     });
                 })
-                .then(console.log);
+                .then((reservations) => {
+                    result.reservations = reservations;
 
-
-            res.render('doctor/schedule-view', { result });
+                    res.render('doctor/schedule-view', { result });
+                });
         },
         getGetPatientsList(req, res) {
             const result = init(req, {});
