@@ -159,10 +159,17 @@ module.exports = function(data, models, validator) {
             const endDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
             endDate.setDate(endDate.getDate() - startOffset + 4);
 
-            data.getReservations({})
-                .then((reservations) => {
-
-                });
+            data.getDoctor({ _userId: req.user._id })
+                .then((doc) => {
+                    return data.getReservations({
+                        _doctorId: doc._id.toString(),
+                        _date: {
+                            $gte: beginDate,
+                            $lte: endDate,
+                        },
+                    });
+                })
+                .then(console.log);
 
 
             res.render('doctor/schedule-view', { result });
