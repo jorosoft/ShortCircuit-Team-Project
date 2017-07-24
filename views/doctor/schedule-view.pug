@@ -14,14 +14,54 @@ block content
                         tr
                             th Час
                             - for(let i = 0; i < 5; i += 1) {
-                                th !{dayNames[i]} !{result.weekDays[i]}
+                                th !{dayNames[i]} !{result.weekDays[i].getDate()}.!{result.weekDays[i].getMonth() + 1}.!{result.weekDays[i].getFullYear()}
                             - }
                     tbody
                         each val in result._defaultSchema
                             tr
                                 td !{val}:00
-                                td
-                                td
-                                td
-                                td
-                                td
+                                td  
+                                    - if(val < result.mySchema.monday.begin || val > result.mySchema.monday.end) {
+                                        span ---    
+                                    - } else {                             
+                                        each v in result.reservations
+                                            - if(v._date.toString() === result.weekDays[0].toString() && v._hour === (val + ':00')) {
+                                                span !{v._firstName} !{v._lastName}
+                                            - }
+                                    - }
+                                td  
+                                    - if(val < result.mySchema.tuesday.begin || val > result.mySchema.tuesday.end) {
+                                        span ---    
+                                    - } else {                             
+                                        each v in result.reservations
+                                            - if(v._date.toString() === result.weekDays[1].toString() && v._hour === (val + ':00')) {
+                                                span !{v._firstName} !{v._lastName}
+                                            - }
+                                    - }
+                                td  
+                                    - if(val < result.mySchema.wednesday.begin || val > result.mySchema.wednesday.end) {
+                                        span ---    
+                                    - } else {                             
+                                        each v in result.reservations
+                                            - if(v._date.toString() === result.weekDays[2].toString() && v._hour === (val + ':00')) {
+                                                span !{v._firstName} !{v._lastName}
+                                            - }
+                                    - }
+                                td  
+                                    - if(val < result.mySchema.thursday.begin || val > result.mySchema.thursday.end) {
+                                        span ---    
+                                    - } else {                             
+                                        each v in result.reservations
+                                            - if(v._date.toString() === result.weekDays[3].toString() && v._hour === (val + ':00')) {
+                                                span !{v._firstName} !{v._lastName}
+                                            - }
+                                    - }
+                                td  
+                                    - if(val < result.mySchema.friday.begin || val > result.mySchema.friday.end) {
+                                        span ---    
+                                    - } else {                             
+                                        each v in result.reservations
+                                            - if(v._date.toString() === result.weekDays[4].toString() && v._hour === (val + ':00')) {
+                                                span !{v._firstName} !{v._lastName}
+                                            - }
+                                    - }

@@ -163,25 +163,34 @@ module.exports = function(data, models, validator) {
             for (let i = 0; i < 5; i += 1) {
                 const date = new Date(beginDate);
                 date.setDate(date.getDate() + i);
-                const dateString = date.getDate() + '.' +
-                    (date.getMonth() + 1) + '.' +
-                    date.getUTCFullYear();
-                weekDays.push(dateString);
+                weekDays.push(date);
             }
 
             result.weekDays = weekDays;
 
             data.getDoctor({ _userId: req.user._id })
                 .then((doc) => {
-                    return data.getReservations({
+                    result.mySchema = doc._scheduleSchema;
+
+                    return Promise.all([data.getReservations({
                         _doctorId: doc._id.toString(),
                         _date: {
                             $gte: beginDate,
                             $lte: endDate,
                         },
-                    });
+                    }), data.getUsers({})]);
                 })
-                .then((reservations) => {
+                .then(([reservations, users]) => {
+                    reservations.forEach((reservation) => {
+                        users.forEach((user) => {
+                            if (reservation._userId.toString() ===
+                                user._id.toString()) {
+                                reservation._firstName = user._firstName;
+                                reservation._lastName = user._lastName;
+                            }
+                        });
+                    });
+
                     result.reservations = reservations;
 
                     res.render('doctor/schedule-view', { result });
