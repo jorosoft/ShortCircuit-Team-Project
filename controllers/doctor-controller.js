@@ -43,16 +43,23 @@ module.exports = function(data, models, validator) {
             const patientEgn = req.body.pin;
             const content = req.body.content;
             const doctorId = req.user._id;
+            const expDate = req.body.expDate;
+            const dateParts = expDate.split('.');
+            const parsedDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
             data.getPatient({
                 _pin: patientEgn,
             })
                 .then((patient) => {
                     data.addRecipe(
-                        models.getRecipe(doctorId, patient._id, null, content)
+                        models.getRecipe(doctorId, patient._id, parsedDate, content)
                     );
                     res.redirect('/');
-                });
+                })
+                .catch((err) => {
+                        res.redirect('/add-recipe')
+                    }
+                );
         },
         getAddPatientForm(req, res) {
             const result = init(req, {});
