@@ -39,6 +39,21 @@ module.exports = function(data, models, validator) {
                     res.redirect('/');
                 });
         },
+        addRecipe(req, res){
+            const patientEgn = req.body.pin;
+            const content = req.body.content;
+            const doctorId = req.user._id;
+
+            data.getPatient({
+                _pin: patientEgn,
+            })
+                .then((patient) => {
+                    data.addRecipe(
+                        models.getRecipe(doctorId, patient._id, null, content)
+                    );
+                    res.redirect('/');
+                });
+        },
         getAddPatientForm(req, res) {
             const result = init(req, {});
             result.title = 'Добавяне на пациент';
@@ -224,7 +239,7 @@ module.exports = function(data, models, validator) {
                     res.render('doctor/patients-list-view', { result });
                 });
         },
-        getreservations(req, res) {
+        getReservations(req, res) {
             const params = req.params.params.split(';');
             const doctorId = params[0].split('=')[1];
             const date = params[1].split('=')[1];
