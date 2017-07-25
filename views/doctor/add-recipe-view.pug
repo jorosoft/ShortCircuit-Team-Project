@@ -2,17 +2,21 @@ extends ../_layout
 
 block page-title
     title !{result.title}
-
+    link(rel="stylesheet", href="./libs/jquery-ui/themes/base/all.css")
 block content
     .panel.panel-default
         .panel-heading Добавяне на рецепта
         .panel-body
+            script(src="./libs/jquery-ui/ui/widgets/datepicker.js")
+            script(src="./libs/jquery-ui/ui/i18n/datepicker-bg.js")
             form(method="post")
                 .form-group.input-group.input-group
                     span(class="input-group-addon" id="sizing-addon3")
                         span(class="glyphicon glyphicon-user")
                     input(type="text" id="pin" class="form-control" name="pin" placeholder="ЕГН" aria-describedby="sizing-addon3")
                     input(type="text" id="content" class="form-control" name="content" placeholder="Съдържание" aria-describedby="sizing-addon3")
+                    input(type="text" id="datepicker" name="expDate" placeholder="Срок на валидност")
+                    script $('#datepicker').datepicker({ minDate: 0 });
                 include ../error-messages
                 .form-group
                     button(id="btnAddRecipe" class="btn btn-info btn-block") Добави
