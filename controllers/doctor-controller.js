@@ -45,21 +45,22 @@ module.exports = function(data, models, validator) {
             const doctorId = req.user._id;
             const expDate = req.body.expDate;
             const dateParts = expDate.split('.');
-            const parsedDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+            const parsedDate =
+                new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
             data.getPatient({
                     _pin: patientEgn,
                 })
                 .then((patient) => {
                     data.addRecipe(
-                        models.getRecipe(doctorId, patient._id, parsedDate, content)
+                        models
+                        .getRecipe(doctorId, patient._id, parsedDate, content)
                     );
                     res.redirect('/');
                 })
                 .catch((err) => {
-                        res.redirect('/add-recipe')
-                    }
-                );
+                    res.redirect('/add-recipe');
+                });
         },
         getAddPatientForm(req, res) {
             const result = init(req, {});
@@ -169,7 +170,7 @@ module.exports = function(data, models, validator) {
             } else if (day === 6) {
                 startOffset = 2;
             } else {
-                startOffset = day - 1;
+                startOffset = -(day - 1);
             }
 
             const dd = today.getDate();
@@ -177,9 +178,9 @@ module.exports = function(data, models, validator) {
             const yyyy = today.getFullYear();
 
             const beginDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
-            beginDate.setDate(beginDate.getDate() - startOffset);
+            beginDate.setDate(beginDate.getDate() + startOffset);
             const endDate = new Date(yyyy, mm, dd, 12, 0, 0, 0);
-            endDate.setDate(endDate.getDate() - startOffset + 4);
+            endDate.setDate(endDate.getDate() + (startOffset + 4));
 
             const weekDays = [];
             for (let i = 0; i < 5; i += 1) {

@@ -33,10 +33,10 @@ module.exports = function(data, models, validator) {
 
             const user = models
                 .getUser(req.body.username,
-                req.body.password,
-                req.body.firstName,
-                req.body.lastName,
-                req.body.optradio);
+                    req.body.password,
+                    req.body.firstName,
+                    req.body.lastName,
+                    req.body.optradio);
 
             data.addUser(user)
                 .then((userId) => {
