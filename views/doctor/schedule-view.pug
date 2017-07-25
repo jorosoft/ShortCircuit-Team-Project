@@ -20,48 +20,48 @@ block content
                         each val in result._defaultSchema
                             tr
                                 td !{val}:00
-                                td  
+                                td(class="text-center")  
                                     - if(val < result.mySchema.monday.begin || val > result.mySchema.monday.end) {
-                                        span ---    
+                                        span(class="glyphicon glyphicon-remove-circle text-danger")    
                                     - } else {                             
                                         each v in result.reservations
-                                            - if(v._date.toString() === result.weekDays[0].toString() && v._hour === (val + ':00')) {
+                                            - if(v._date === result.weekDays[0].toISOString() && v._hour === (val + ':00')) {
                                                 span !{v._firstName} !{v._lastName}
                                             - }
                                     - }
-                                td  
+                                td(class="text-center")  
                                     - if(val < result.mySchema.tuesday.begin || val > result.mySchema.tuesday.end) {
-                                        span ---    
+                                        span(class="glyphicon glyphicon-remove-circle text-danger") 
                                     - } else {                             
                                         each v in result.reservations
-                                            - if(v._date.toString() === result.weekDays[1].toString() && v._hour === (val + ':00')) {
+                                            - if(v._date === result.weekDays[1].toISOString() && v._hour === (val + ':00')) {
                                                 span !{v._firstName} !{v._lastName}
                                             - }
                                     - }
-                                td  
+                                td(class="text-center")  
                                     - if(val < result.mySchema.wednesday.begin || val > result.mySchema.wednesday.end) {
-                                        span ---    
+                                        span(class="glyphicon glyphicon-remove-circle text-danger")    
                                     - } else {                             
                                         each v in result.reservations
-                                            - if(v._date.toString() === result.weekDays[2].toString() && v._hour === (val + ':00')) {
+                                            - if(v._date === result.weekDays[2].toISOString() && v._hour === (val + ':00')) {
                                                 span !{v._firstName} !{v._lastName}
                                             - }
                                     - }
-                                td  
+                                td(class="text-center")  
                                     - if(val < result.mySchema.thursday.begin || val > result.mySchema.thursday.end) {
-                                        span ---    
+                                        span(class="glyphicon glyphicon-remove-circle text-danger") 
                                     - } else {                             
                                         each v in result.reservations
-                                            - if(v._date.toString() === result.weekDays[3].toString() && v._hour === (val + ':00')) {
+                                            - if(v._date === result.weekDays[3].toISOString() && v._hour === (val + ':00')) {
                                                 span !{v._firstName} !{v._lastName}
                                             - }
                                     - }
-                                td  
+                                td(class="text-center")  
                                     - if(val < result.mySchema.friday.begin || val > result.mySchema.friday.end) {
-                                        span ---    
+                                        span(class="glyphicon glyphicon-remove-circle text-danger") 
                                     - } else {                             
                                         each v in result.reservations
-                                            - if(v._date.toString() === result.weekDays[4].toString() && v._hour === (val + ':00')) {
+                                            - if(v._date === result.weekDays[4].toISOString() && v._hour === (val + ':00')) {
                                                 span !{v._firstName} !{v._lastName}
                                             - }
                                     - }

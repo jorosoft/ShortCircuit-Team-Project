@@ -1,7 +1,18 @@
-/* globals $ getData postData Set */
+/* globals $ getData Set io */
 
 const $selectPanel = $('.reservation');
 const $schedule = $('.schedule');
+let selectedDoctor;
+let selectedDate;
+
+const socket = io.connect('http://localhost:3001');
+
+socket.on('new-reservation', function(reservation) {
+    if (reservation._doctorId === selectedDoctor._id &&
+        reservation._date === selectedDate) {
+        renderDoctorSchedule();
+    }
+});
 
 function prepareReservation(userId, doctorId, date, hour) {
     const $userId = $('<input name="userId" type="hidden">')
@@ -26,7 +37,7 @@ function selectHour($hour) {
     }
 }
 
-function getDayName(date) {
+function getDayName() {
     const days = [
         'sunday',
         'monday',
@@ -37,25 +48,28 @@ function getDayName(date) {
         'saturday',
     ];
 
-    const dateArray = date.split('.');
+    const dateArray = $('#datepicker').val().split('.');
     const d = new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
 
     return days[d.getDay()];
 }
 
-function getReservations(doctorId, date) {
-    const dateParts = date.split('.');
+function getReservations(doctorId) {
+    const dateParts = $('#datepicker').val().split('.');
     const newDate =
-        new Date(dateParts[2], dateParts[1] - 1, dateParts[0], 12, 0, 0, 0);
+        new Date(dateParts[2], dateParts[1] - 1, dateParts[0], 12, 0, 0, 0)
+        .toISOString();
 
     return getData('/reservations/doctorId=' + doctorId + ';date=' + newDate);
 }
 
-function renderDoctorSchedule(doctor, date) {
+function renderDoctorSchedule() {
+    $('.schedule').html('');
+    $('#reservation').remove();
     const $table = $('<div>');
-    if (doctor.hasOwnProperty('_scheduleSchema')) {
+    if (selectedDoctor.hasOwnProperty('_scheduleSchema')) {
         const $currentDay = $('<div class="row">');
-        const dayName = getDayName(date);
+        const dayName = getDayName();
         if (dayName === 'saturday' || dayName === 'sunday') {
             $table.html('Неработен ден!');
             $table.appendTo($schedule);
@@ -63,10 +77,10 @@ function renderDoctorSchedule(doctor, date) {
             return;
         }
 
-        const from = doctor._scheduleSchema[dayName].begin;
-        const to = doctor._scheduleSchema[dayName].end;
+        const from = selectedDoctor._scheduleSchema[dayName].begin;
+        const to = selectedDoctor._scheduleSchema[dayName].end;
 
-        getReservations(doctor._id, date)
+        getReservations(selectedDoctor._id)
             .then((res) => {
                 for (let i = from; i <= to; i += 1) {
                     const $hour = $('<div>')
@@ -81,36 +95,36 @@ function renderDoctorSchedule(doctor, date) {
 
                     $hour.appendTo($currentDay);
                 }
+
+                $currentDay.appendTo($table);
+                $table.appendTo($schedule);
+                $schedule.appendTo($('form'));
+                const $submitBtn = $('<button class="btn btn-success">')
+                    .attr('type', 'submit')
+                    .attr('id', 'reservation')
+                    .html('Резервирай');
+
+                $table.on('click', (ev) => {
+                    const $hour = $(ev.target);
+                    selectHour($hour);
+                    if ($hour.hasClass('well-selected')) {
+                        getData('/user')
+                            .then((user) => {
+                                $submitBtn.appendTo($('form'));
+
+                                const selectedHour = $hour.html();
+
+                                prepareReservation(
+                                    user.result._id,
+                                    selectedDoctor._id,
+                                    selectedDate,
+                                    selectedHour);
+                            });
+                    } else {
+                        $submitBtn.remove();
+                    }
+                });
             });
-
-
-        $currentDay.appendTo($table);
-        $table.appendTo($schedule);
-        $schedule.appendTo($('form'));
-        const $submitBtn =
-            $('<button type="submit" id="reservation" class="btn btn-success">')
-            .html('Резервирай');
-
-        $table.on('click', (ev) => {
-            const $hour = $(ev.target);
-            selectHour($hour);
-            if ($hour.hasClass('well-selected')) {
-                getData('/user')
-                    .then((user) => {
-                        $submitBtn.appendTo($('form'));
-                        const selecterDate = $('#datepicker').val();
-                        const selectedHour = $hour.html();
-
-                        prepareReservation(
-                            user.result._id,
-                            doctor._id,
-                            selecterDate,
-                            selectedHour);
-                    });
-            } else {
-                $submitBtn.remove();
-            }
-        });
     } else {
         $table.html('Този лекар няма публикувано приемно време!');
         $table.appendTo($schedule);
@@ -181,7 +195,7 @@ Promise.all([
                 $doctorSelect.on('change', () => {
                     $('.schedule').html('');
                     $('#datepicker').remove();
-                    $('<input type="text" id="datepicker">')
+                    $('<input type="text" id="datepicker" readonly>')
                         .attr('placeholder', 'Изберете дата')
                         .appendTo($($selectPanel));
                     $(function() {
@@ -189,16 +203,19 @@ Promise.all([
                     });
 
                     $('#datepicker').on('change', (ev) => {
-                        $('.schedule').html('');
-                        $('#reservation').remove();
-                        const selectedDate = $('#datepicker').val();
+                        const dateParts = $('#datepicker').val().split('.');
+                        selectedDate = new Date(
+                            dateParts[2],
+                            dateParts[1] - 1,
+                            dateParts[0],
+                            12, 0, 0, 0).toISOString();
                         const selectedDoctorId = $doctorSelect
                             .children(':selected')
                             .attr('id');
-                        const selectedDoctor = docsByCenter
+                        selectedDoctor = docsByCenter
                             .filter((doc) => doc._id === selectedDoctorId)[0];
 
-                        renderDoctorSchedule(selectedDoctor, selectedDate);
+                        renderDoctorSchedule();
                     });
                 });
             });

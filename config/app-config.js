@@ -4,10 +4,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
-
 module.exports = function(data) {
     const app = express();
-
 
     app.set('view engine', 'pug');
 

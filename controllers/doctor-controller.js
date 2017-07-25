@@ -39,14 +39,14 @@ module.exports = function(data, models, validator) {
                     res.redirect('/');
                 });
         },
-        addRecipe(req, res){
+        addRecipe(req, res) {
             const patientEgn = req.body.pin;
             const content = req.body.content;
             const doctorId = req.user._id;
 
             data.getPatient({
-                _pin: patientEgn,
-            })
+                    _pin: patientEgn,
+                })
                 .then((patient) => {
                     data.addRecipe(
                         models.getRecipe(doctorId, patient._id, null, content)
@@ -190,8 +190,8 @@ module.exports = function(data, models, validator) {
                     return Promise.all([data.getReservations({
                         _doctorId: doc._id.toString(),
                         _date: {
-                            $gte: beginDate,
-                            $lte: endDate,
+                            $gte: beginDate.toISOString(),
+                            $lte: endDate.toISOString(),
                         },
                     }), data.getUsers({})]);
                 })
@@ -243,7 +243,7 @@ module.exports = function(data, models, validator) {
             const params = req.params.params.split(';');
             const doctorId = params[0].split('=')[1];
             const date = params[1].split('=')[1];
-            const searchedDate = new Date(date);
+            const searchedDate = new Date(date).toISOString();
 
             data.getReservations({ _doctorId: doctorId, _date: searchedDate })
                 .then((reservations) => {

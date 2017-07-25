@@ -1,3 +1,5 @@
+/* globals global */
+
 module.exports = function(data, models, validator) {
     function init(req, result) {
         if (req.isAuthenticated()) {
@@ -22,13 +24,14 @@ module.exports = function(data, models, validator) {
             res.render('patient/reservation-view', { result });
         },
         reservation(req, res) {
-            const date = req.body.date.split('.');
             const reservation = {
                 _doctorId: req.body.doctorId,
                 _userId: req.body.userId,
-                _date: new Date(date[2], date[1] - 1, date[0], 12, 0, 0, 0),
+                _date: req.body.date,
                 _hour: req.body.hour,
             };
+
+            global.io.emit('new-reservation', reservation);
 
             data.addReservation(reservation)
                 .then(() => res.redirect('/'));
