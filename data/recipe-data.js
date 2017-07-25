@@ -3,7 +3,7 @@ module.exports = function(repository, models) {
         addRecipe(recipe) {
             return repository.add('recipes', recipe);
         },
-        getrecipe(filter) {
+        getRecipe(filter) {
             return repository.findOne('recipes', filter);
         },
         getRecipes(filter) {
