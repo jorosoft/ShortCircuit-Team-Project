@@ -64,6 +64,10 @@ module.exports = function(data, models, validator) {
             res.status(200).redirect('/');
         },
         getProfile(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Профил';
 
@@ -129,7 +133,7 @@ module.exports = function(data, models, validator) {
             const result = init(req, {});
             result.title = 'ГРЕШКА!';
 
-            res.render('unauthorized-view', { result });
+            res.render('auth/unauthorized-view', { result });
         },
         getLoggedUser(req, res) {
             res.send(JSON.stringify({ result: req.user }));

@@ -18,6 +18,10 @@ module.exports = function(data, models, validator) {
 
     return {
         getReservationForm(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Резервация на час за преглед';
 
@@ -37,6 +41,10 @@ module.exports = function(data, models, validator) {
                 .then(() => res.redirect('/'));
         },
         getResults(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Резултати от изслевания';
 

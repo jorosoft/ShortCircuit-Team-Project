@@ -63,18 +63,30 @@ module.exports = function(data, models, validator) {
                 });
         },
         getAddPatientForm(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Добавяне на пациент';
 
             res.render('doctor/add-patient-view', { result });
         },
         getAddRecipeForm(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Добавяне на рецепта';
 
             res.render('doctor/add-recipe-view', { result });
         },
         getAddResultForm(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Добавяне на резултат';
 
@@ -92,6 +104,10 @@ module.exports = function(data, models, validator) {
                 });
         },
         getScheduleSchema(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Приемно време';
             const userId = req.user._id;
@@ -158,6 +174,10 @@ module.exports = function(data, models, validator) {
                 .then(() => res.redirect('/'));
         },
         getSchedule(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Седмичен график';
             result._defaultSchema = getDefaultSchema();
@@ -219,7 +239,11 @@ module.exports = function(data, models, validator) {
                     res.render('doctor/schedule-view', { result });
                 });
         },
-        getGetPatientsList(req, res) {
+        getPatientsList(req, res) {
+            if (!req.isAuthenticated()) {
+                res.redirect('/unauthorized');
+            }
+
             const result = init(req, {});
             result.title = 'Моите пациенти';
             const userId = req.user._id;
