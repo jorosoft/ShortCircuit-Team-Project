@@ -17,10 +17,10 @@ module.exports = {
     },
     validatePin(pin) {
         if (pin.length !== 10) {
-            return false;
+            throw new Error('Invalid pin length!');
         }
         if (/[^0-9]/.test(pin)) {
-            return false;
+            throw new Error('Pin should be numbers only!');
         }
         let year = Number(pin.slice(0, 2));
         let month = Number(pin.slice(2, 4));
@@ -37,7 +37,7 @@ module.exports = {
         }
 
         if (!isValidDate(year, month, day)) {
-            return false;
+            throw new Error('Invalid date for Pin!');
         }
 
         let checkSum = 0;
@@ -50,10 +50,19 @@ module.exports = {
         checkSum %= 11;
         checkSum %= 10;
 
-        if (checkSum !== Number(pin.charAt(9))) {
-            return false;
+     /*   if (checkSum !== Number(pin.charAt(9))) {
+            throw new Error();
+        }*/
+    },
+    validateUserName(username){
+        if (username.length <= 2 || username.length >= 17){
+            throw new Error('Invalid username length!');
+        }
+    },
+    validateName(name){
+        if (name.length <= 2 || name.length >= 15){
+            throw new Error('Invalid name length!');
         }
 
-        return true;
-    },
+    }
 };

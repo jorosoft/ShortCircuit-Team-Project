@@ -37,6 +37,10 @@ module.exports = function(data, models, validator) {
                     patient._doctorId = doctor._id;
                     data.updatePatient(patient);
                     res.redirect('/');
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.red('/add-patient')
                 });
         },
         addRecipe(req, res) {
