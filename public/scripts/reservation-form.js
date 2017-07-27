@@ -4,8 +4,8 @@ const $selectPanel = $('.reservation');
 const $schedule = $('.schedule');
 let selectedDoctor;
 let selectedDate;
-const host = document.location.protocol + '//' + document.location.host;
-const socket = io.connect(host);
+
+const socket = io.connect('http://localhost:3001');
 
 socket.on('new-reservation', function(reservation) {
     if (reservation._doctorId === selectedDoctor._id &&
