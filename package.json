@@ -5,12 +5,6 @@
     "repository": "https://github.com/jorosoft/ShortCircuit-Team-Project.git",
     "author": "",
     "license": "MIT",
-    "scripts": {
-        "start": "node app.js",
-        "test": "./node_modules/.bin/mocha ./tests/unit-tests/*.js",
-        "cover": "./node_modules/.bin/istanbul cover --handle-sigint  app.js",
-        "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/**/*.js -- --req"
-    },
     "dependencies": {
         "body-parser": "1.17.2",
         "bootstrap": "3.3.7",
