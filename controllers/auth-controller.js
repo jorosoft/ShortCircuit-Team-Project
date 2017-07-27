@@ -28,7 +28,6 @@ module.exports = function(data, models, validator) {
             res.render('auth/register-view', { result });
         },
         register(req, res) {
-            validator.validateUserName(req.body.username);
             validator.validatePasswordsMatch(req.body.password,
                 req.body.passConfirmation);
 
@@ -51,18 +50,14 @@ module.exports = function(data, models, validator) {
 
                         data.addDoctor(doctor);
                     } else if (req.body.optradio === 'patientType') {
-                        //validator.validatePin(req.body.pin);
                         const patient = models.getPatient(userId, req.body.pin);
 
                         data.addPatient(patient);
                     }
-
-                    res.redirect('/login');
                 })
-                .catch((err) =>{
-                    console.log(err);
-                    res.redirect('/register');
-                });
+                .catch(console.log);
+
+            res.redirect('/login');
         },
         logout(req, res) {
             req.logout();
