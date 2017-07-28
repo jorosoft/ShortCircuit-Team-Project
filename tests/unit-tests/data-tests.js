@@ -10,6 +10,7 @@ let repositoryStubAdd;
 let repositoryStubFindOne;
 let repositoryStubFind;
 let repositoryStubUpdate;
+let modelsStub;
 
 describe('Data Tests', () => {
     beforeEach(() => {
@@ -23,6 +24,11 @@ describe('Data Tests', () => {
             find: repositoryStubFind,
             update: repositoryStubUpdate,
         });
+        modelsStub = sinon.stub().returns({
+            getBaseUser: (user, pass) => {
+                return { username: user, password: pass };
+            },
+        });
     });
 
     afterEach(() => {
@@ -33,7 +39,49 @@ describe('Data Tests', () => {
     });
 
     describe('Auth Data Tests', () => {
+        it('expect findUserById() to call repo.add() with correct params',
+            () => {
+                const data = require('../../data')(repositoryStub(), null);
 
+                data.findUserById('666');
+
+                expect(repositoryStubFindOne).to.have.been
+                    .calledWith('users', '666');
+            });
+
+        it('expect findUserByCredentials() to call repo.add() with params',
+            () => {
+                const data =
+                    require('../../data')(repositoryStub(), modelsStub());
+
+                data.findUserByCredentials('pesho', '111');
+
+                expect(repositoryStubFindOne).to.have.been
+                    .calledWith('users', {
+                        username: 'pesho',
+                        password: '111',
+                    });
+            });
+
+        it('expect getUsers() to call repo.find() with correct params',
+            () => {
+                const data = require('../../data')(repositoryStub(), null);
+
+                data.getUsers({ _id: 1234 });
+
+                expect(repositoryStubFind).to.have.been
+                    .calledWith('users', { _id: 1234 });
+            });
+
+        it('expect updateUser() to call repo.update() with correct params',
+            () => {
+                const data = require('../../data')(repositoryStub(), null);
+
+                data.updateUser({ _id: 1234 });
+
+                expect(repositoryStubUpdate).to.have.been
+                    .calledWith('users', { _id: 1234 });
+            });
     });
 
     describe('Patient Data Tests', () => {
