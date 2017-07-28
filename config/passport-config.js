@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const jwt = require('jsonwebtoken');
 
 module.exports = function(app, data) {
     app.use(passport.initialize());
@@ -11,6 +12,11 @@ module.exports = function(app, data) {
         data.findUserByCredentials(username, password)
             .then((user) => {
                 if (user) {
+                    const secretOrKey = jwtOptions.secretOrKey;
+                    const token = jwt.sign(user, secretOrKey, {
+                        expiresIn: 631139040, // 20 years in seconds
+                    });
+
                     return done(null, user);
                 }
 
@@ -37,7 +43,7 @@ module.exports = function(app, data) {
     });
 
     passport.use(localStrategy);
-    // passport.use(jwtStrategy);
+    passport.use(jwtStrategy);
 
     passport.serializeUser((user, done) => {
         if (user) {

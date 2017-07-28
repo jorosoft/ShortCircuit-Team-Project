@@ -237,5 +237,6 @@ _Pvt_Extensions
 TeamWorks
 
 node_modules/
+coverage/
 bower_components/
 *.lock

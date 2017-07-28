@@ -108,7 +108,9 @@ function renderDoctorSchedule() {
                     const $hour = $(ev.target);
                     selectHour($hour);
                     if ($hour.hasClass('well-selected')) {
-                        getData('/user')
+                        getData('/user', {
+                                'Authorization': 'topsecretanduniquekey',
+                            })
                             .then((user) => {
                                 $submitBtn.appendTo($('form'));
 
