@@ -1,5 +1,5 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
@@ -16,6 +16,8 @@ module.exports = function(app, data) {
                     const token = jwt.sign(user, secretOrKey, {
                         expiresIn: 631139040, // 20 years in seconds
                     });
+
+                    user.token = token;
 
                     return done(null, user);
                 }

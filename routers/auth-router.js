@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 module.exports = function(app, data, models, validator) {
     const controller =
@@ -13,7 +14,9 @@ module.exports = function(app, data, models, validator) {
         .post('/login',
             passport
             .authenticate('local', { failureRedirect: '/login' }),
-            (req, res) => res.redirect('/'))
+            (req, res) => {
+                res.redirect('/');
+            })
         .post('/register', controller.register)
         .get('/logout', controller.logout)
         .get('/profile', controller.getProfile)
