@@ -1,0 +1,18 @@
+extends ../_layout
+
+block page-title
+    title !{result.title}
+
+block content
+    .panel.panel-default
+        .panel-heading Промяна на потребителски данни
+        .panel-body
+            form(method="post")
+                .form-group.input-group.input-group
+                    span(class="input-group-addon" id="sizing-addon3")
+                        span(class="glyphicon glyphicon-user")
+                    input(type='text' id="medCenter" class="form-control" name="medCenter" placeholder="Въведете нов медицински център" )
+                    input(type='text' id='city' class='form-control' name='city' placeholder='Въведете нов град')
+                include ../error-messages
+                .form-group
+                    button(id="btnSaveChanges" class="btn btn-info btn-block") Запази
