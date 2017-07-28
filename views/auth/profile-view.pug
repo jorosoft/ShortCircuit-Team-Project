@@ -8,11 +8,13 @@ block content
         .panel.panel-default
             .panel-heading Профил на !{result.user} 
             .panel-body
-                div Име: !{result.firstName} !{result.lastName}
-                if result.isPatient                                                                                 
-                    div ЕГН: !{result.pin} 
-                else
-                    div УИН: !{result.regNum}
-                    div Специалност: !{result.speciality}
-                    div Медицински Център: !{result.medCenter}
-                    div Град: !{result.city}           
+                form(method='post')
+                    div Име: !{result.firstName} !{result.lastName}
+                    if result.isPatient
+                        div ЕГН: !{result.pin}
+                    else
+                        div УИН: !{result.regNum}
+                        div Специалност: !{result.speciality}
+                        div Медицински Център: !{result.medCenter}
+                        div Град: !{result.city}
+                    button(id='changeInfoBtn' class="btn btn-info btn-block") Промяна
