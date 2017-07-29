@@ -12,9 +12,6 @@ module.exports = function(constants, validator) {
         }
 
         set user(value) {
-            validator.validateStringLength(value,
-                constants.MIN_USERNAME_LENGTH, constants.MAX_USERNAME_LENGTH);
-
             this.username = value.trim();
         }
 
@@ -23,9 +20,6 @@ module.exports = function(constants, validator) {
         }
 
         set pass(value) {
-            validator.validateStringLength(value,
-                constants.MIN_PASSWORD_LENGTH, constants.MAX_PASSWORD_LENGTH);
-
             this.password = new crypto.SHA1(value.trim()).toString();
         }
     }

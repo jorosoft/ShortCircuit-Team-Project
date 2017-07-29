@@ -27,26 +27,26 @@ module.exports = function(data, models, validator) {
 
             res.render('auth/register-view', { result });
         },
-        getChangeProfileForm(req, res){
+        getChangeProfileForm(req, res) {
             const result = init(req, {});
             result.title = 'Промяна на данни';
 
             res.render('auth/profile-change-view', { result });
         },
-        changeProfileInfo(req, res){
+        changeProfileInfo(req, res) {
             const newMedCenter = req.body.medCenter;
             const newCity = req.body.city;
             const userId = req.user._id;
 
             data.getDoctor({
-                _userId: userId,
-            })
+                    _userId: userId,
+                })
                 .then((doctor) => {
                     doctor._medCenter = newMedCenter;
                     doctor._city = newCity;
                     data.updateDoctor(doctor);
                     res.redirect('/');
-                })
+                });
         },
         register(req, res) {
             validator.validatePasswordsMatch(req.body.password,

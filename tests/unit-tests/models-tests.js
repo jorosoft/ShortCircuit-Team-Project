@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const crypto = require('crypto-js');
 
 const models = require('../../models')(null, null);
 
@@ -8,15 +9,50 @@ describe('Models Tests', () => {
             const userName = 'jorkata';
             const passWord = '12345';
 
-            let baseUser = models.getBaseUser(userName, passWord);
+            const baseUser = models.getBaseUser(userName, passWord);
 
+            expect(baseUser.user).to.eql(userName);
+            expect(baseUser.pass).to
+                .eql(new crypto.SHA1(passWord.trim()).toString());
+        });
+        it('Setters should set correct values', () => {
+            const userName = 'jorkata';
+            const passWord = '12345';
+
+            const baseUser = models.getBaseUser(userName, passWord);
+
+            baseUser.user = 'pesho';
+            baseUser.pass = 'XXL';
+
+            expect(baseUser.user).to.eql('pesho');
+            expect(baseUser.pass).to
+                .eql(new crypto.SHA1('XXL'.trim()).toString());
         });
     });
     describe('User Model Tests', () => {
+        it('Constructor should create proper BaseUser', () => {
+            const userName = 'jorkata';
+            const passWord = '12345';
+            const firstName = 'Георги';
+            const lastName = 'Иванов';
+            const userType = 'doctor';
 
+            const user = models
+                .getUser(userName, passWord, firstName, lastName, userType);
+
+            expect(user.username).to.eql(userName);
+            expect(user.password).to
+                .eql(new crypto.SHA1(passWord.trim()).toString());
+            expect(user.firstName).to.eql(firstName);
+            expect(user.lastName).to.eql(lastName);
+            expect(user.userType).to.eql(userType);
+        });
     });
     describe('Patient Model Tests', () => {
-        let userId, pin, doctorId, patient;
+        let userId;
+        let pin;
+        let doctorId;
+        let patient;
 
         beforeEach(() => {
             userId = '12345';
@@ -42,26 +78,33 @@ describe('Models Tests', () => {
         });
     });
     describe('Doctor Model Tests', () => {
-        let doctor, userId, regNum, specialty, medCenter, city;
+        let doctor;
+        let userId;
+        let regNum;
+        let specialty;
+        let medCenter;
+        let city;
 
         beforeEach(() => {
-             userId = '12345';
-             regNum = '77777';
-             specialty = 'Neuro-Surgeon';
-             medCenter = 'KR-Med';
-             city = 'SofLeto';
+            userId = '12345';
+            regNum = '77777';
+            specialty = 'Neuro-Surgeon';
+            medCenter = 'KR-Med';
+            city = 'SofLeto';
 
-            doctor = models.getDoctor(userId, regNum, specialty, medCenter, city, false);
+            doctor = models
+                .getDoctor(userId, regNum, specialty, medCenter, city, false);
         });
 
-        it('Doctor constructor should create object with correct properties', () => {
-            expect(doctor.userId).to.eql(userId);
-            expect(doctor.regNumber).to.eql(regNum);
-            expect(doctor.speciality).to.eql(specialty);
-            expect(doctor.medCenter).to.eql(medCenter);
-            expect(doctor.hasPatients).to.eql(false);
-            expect(doctor.city).to.eql(city);
-        });
+        it('Doctor constructor should create object with correct properties',
+            () => {
+                expect(doctor.userId).to.eql(userId);
+                expect(doctor.regNumber).to.eql(regNum);
+                expect(doctor.speciality).to.eql(specialty);
+                expect(doctor.medCenter).to.eql(medCenter);
+                expect(doctor.hasPatients).to.eql(false);
+                expect(doctor.city).to.eql(city);
+            });
 
         it('Doctor setters should set correct values', () => {
             doctor.userId = '54321';
@@ -76,10 +119,14 @@ describe('Models Tests', () => {
             expect(doctor.speciality).to.eql('Surgeon');
             expect(doctor.medCenter).to.eql('Pul-Med');
             expect(doctor.city).to.eql('Plovdiv');
-        })
+        });
     });
     describe('Recipe Model Tests', () => {
-        let recipe, doctorId, patientId, expDate, content;
+        let recipe;
+        let doctorId;
+        let patientId;
+        let expDate;
+        let content;
 
         beforeEach(() => {
             doctorId = '777';
@@ -90,12 +137,13 @@ describe('Models Tests', () => {
             recipe = models.getRecipe(doctorId, patientId, expDate, content);
         });
 
-        it('Recipe constructor should create object with correct properties', () => {
-            expect(recipe.doctorId).to.eql(doctorId);
-            expect(recipe.patientId).to.eql(patientId);
-            expect(recipe.expirationDate).to.eql(expDate);
-            expect(recipe.content).to.eql(content);
-        });
+        it('Recipe constructor should create object with correct properties',
+            () => {
+                expect(recipe.doctorId).to.eql(doctorId);
+                expect(recipe.patientId).to.eql(patientId);
+                expect(recipe.expirationDate).to.eql(expDate);
+                expect(recipe.content).to.eql(content);
+            });
 
         it('Recipe setters should set correct values', () => {
             recipe.doctorId = '333';
@@ -110,33 +158,38 @@ describe('Models Tests', () => {
         });
     });
     describe('Result Model Tests', () => {
-        let doctorId, patientId, content, date, result;
+        let doctorId;
+        let patientId;
+        let content;
+        let date;
+        let result;
 
         beforeEach(() => {
-             doctorId = '777';
-             patientId = '999';
-             content = 'All-Fine';
-             date = new Date(97, 12, 7);
-             result = models.getResult(doctorId, patientId, content, date);
+            doctorId = '777';
+            patientId = '999';
+            content = 'All-Fine';
+            date = new Date(97, 12, 7);
+            result = models.getResult(doctorId, patientId, content, date);
         });
 
-        it('Result constructor should create object with correct properties', () => {
-            expect(result.doctorId).to.eql(doctorId);
-            expect(result.patientId).to.eql(patientId);
-            expect(result.content).to.eql(content);
-            expect(result.date).to.eql(date);
-        });
+        it('Result constructor should create object with correct properties',
+            () => {
+                expect(result.doctorId).to.eql(doctorId);
+                expect(result.patientId).to.eql(patientId);
+                expect(result.content).to.eql(content);
+                expect(result.date).to.eql(date);
+            });
 
         it('Result setters should set correct values', () => {
-           result.doctorId = '444';
-           result.patientId = '555';
-           result.content = 'Its fine';
-           result.date = new Date(94, 11, 9);
+            result.doctorId = '444';
+            result.patientId = '555';
+            result.content = 'Its fine';
+            result.date = new Date(94, 11, 9);
 
-           expect(result.doctorId).to.eql('444');
-           expect(result.patientId).to.eql('555');
-           expect(result.content).to.eql('Its fine');
-           expect(result.date).to.eql(new Date(94, 11, 9));
+            expect(result.doctorId).to.eql('444');
+            expect(result.patientId).to.eql('555');
+            expect(result.content).to.eql('Its fine');
+            expect(result.date).to.eql(new Date(94, 11, 9));
         });
     });
 });
