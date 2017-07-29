@@ -8,7 +8,7 @@ block content
         .panel-heading Добавяне на резултат
         .panel-body
             .panel-body
-                form(method="post")
+                form(method="post" action="/add-patient-result")
                     .form-group.input-group.input-group
                         span(class="input-group-addon" id="sizing-addon3")
                             span(class="glyphicon glyphicon-user")
@@ -17,6 +17,4 @@ block content
                     include ../error-messages
                     .form-group
                         button(id="addResBtn" class="btn btn-info btn-block") Добави            
-    
-    script(src="./static/scripts/requester.js")
-    script(src="./static/scripts/add-result.js")
+ 

@@ -117,10 +117,12 @@ module.exports = function(data, models, constants) {
             const pin = req.body.pin;
             const content = req.body.content;
 
-            data.getPatient({ _pin: pin })
+            data.getPatients({ _pin: pin })
                 .then((pat) => {
                     const r = models.getResult(
-                        pat._doctorId, pat._id, content, new Date(Date.now()));
+                        pat[0]._doctorId,
+                        pat[0]._id, content,
+                        new Date(Date.now()));
                     data.addResult(r);
                     res.redirect('/');
                 })
