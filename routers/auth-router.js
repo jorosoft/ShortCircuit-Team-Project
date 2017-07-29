@@ -12,11 +12,6 @@ module.exports = function(app, data, models, constants) {
         .get('/login', controller.getLoginForm)
         .get('/register', controller.getRegisterForm)
         .post('/login',
-            passport
-            .authenticate('local', {
-                successRedirect: '/',
-                failureRedirect: '/login',
-            }),
             (req, res) => {
                 const result = {};
                 req.sanitize('username').trim();
@@ -32,6 +27,11 @@ module.exports = function(app, data, models, constants) {
 
                     return;
                 }
+                passport
+                    .authenticate('local', {
+                        successRedirect: '/',
+                        failureRedirect: '/login',
+                    })(req, res);
             })
         .post('/register', controller.register)
         .get('/logout', controller.logout)
