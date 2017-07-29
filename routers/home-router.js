@@ -8,7 +8,6 @@ module.exports = function(app, data, models, validator) {
 
     router
         .get('/', controller.getHome)
-        .get('/about', controller.getAbout)
         .get('/doctors', controller.getDoctorsView)
         .get('/doctors-all', controller.getDoctors)
         .get('/personal-doctors', controller.getPersonalDoctorsView)

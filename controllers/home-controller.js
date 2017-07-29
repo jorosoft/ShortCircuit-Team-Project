@@ -21,17 +21,17 @@ module.exports = function(data, models, validator) {
 
             res.render('home/home-view', { result });
         },
-        getAbout(req, res) {
-            const result = init(req, {});
-            result.title = 'За системата';
-
-            res.render('home/about-view', { result });
-        },
         getPersonalDoctorsView(req, res) {
             const result = init(req, {});
             result.title = 'Лични лекари';
 
             res.render('home/personal-doctors-view', { result });
+        },
+        getDoctorsView(req, res) {
+            const result = init(req, {});
+            result.title = 'Специалисти';
+
+            res.render('home/doctors-view', { result });
         },
         getPersonalDoctors(req, res) {
             Promise.all([data.getUsers({}),
@@ -50,12 +50,6 @@ module.exports = function(data, models, validator) {
 
                     res.send(JSON.stringify({ result: doctors }));
                 });
-        },
-        getDoctorsView(req, res) {
-            const result = init(req, {});
-            result.title = 'Специалисти';
-
-            res.render('home/doctors-view', { result });
         },
         getDoctors(req, res) {
             Promise.all([data.getUsers({}),
