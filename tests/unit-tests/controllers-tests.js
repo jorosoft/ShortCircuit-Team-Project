@@ -65,6 +65,14 @@ describe('Controllers Tests', () => {
                 expect(resStubRender).to.have.been
                     .calledWith('auth/profile-change-view');
             });
+
+        it('expect unauthorized() to call render with correct view param',
+            () => {
+                authController.unauthorized(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('auth/unauthorized-view');
+            });
     });
     describe('Home Controller Tests', () => {
         it('expect getHome() to call render with correct view param',
@@ -99,12 +107,36 @@ describe('Controllers Tests', () => {
             });
     });
     describe('Patient Controller Tests', () => {
+        it('expect getReservationForm() to call redirect to correct route',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                patientController.getReservationForm(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
+            });
+
         it('expect getReservationForm() to call render with correct view param',
             () => {
                 patientController.getReservationForm(reqStub(), resStub());
 
                 expect(resStubRender).to.have.been
                     .calledWith('patient/reservation-view');
+            });
+
+        it('expect getResults() to call redirect to correct route',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                patientController.getResults(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
             });
 
         it('expect getResults() to call render with correct view param',
