@@ -129,4 +129,12 @@ module.exports = {
             },
         },
     },
+    RULES_CONTENT: {
+        'content': {
+            notEmpty: {
+                options: true,
+                errorMessage: 'Липсва съдържание!',
+            },
+        },
+    },
 };

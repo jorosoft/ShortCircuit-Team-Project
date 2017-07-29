@@ -20,6 +20,20 @@ module.exports = function(data, models, constants) {
 
     return {
         addPatient(req, res) {
+            const result = init(req, {});
+
+            req.sanitize('pin').trim();
+            req.checkBody(constants.RULES_PIN);
+
+            const errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { messages: errors };
+                res.render('doctor/add-patient-view', { result });
+
+                return;
+            }
+
             const egn = req.body.pin;
             const userId = req.user._id;
 
@@ -45,6 +59,22 @@ module.exports = function(data, models, constants) {
                 });
         },
         addRecipe(req, res) {
+            const result = init(req, {});
+
+            req.sanitize('pin').trim();
+            req.sanitize('content').trim();
+            req.checkBody(constants.RULES_PIN);
+            req.checkBody(constants.RULES_CONTENT);
+
+            const errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { messages: errors };
+                res.render('doctor/add-recipe-view', { result });
+
+                return;
+            }
+
             const patientEgn = req.body.pin;
             const content = req.body.content;
             const doctorId = req.user._id;
@@ -65,6 +95,37 @@ module.exports = function(data, models, constants) {
                 })
                 .catch((err) => {
                     res.redirect('/add-recipe');
+                });
+        },
+        addResult(req, res) {
+            const result = init(req, {});
+
+            req.sanitize('pin').trim();
+            req.sanitize('content').trim();
+            req.checkBody(constants.RULES_PIN);
+            req.checkBody(constants.RULES_CONTENT);
+
+            const errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { messages: errors };
+                res.render('doctor/add-result-view', { result });
+
+                return;
+            }
+
+            const pin = req.body.pin;
+            const content = req.body.content;
+
+            data.getPatient({ _pin: pin })
+                .then((pat) => {
+                    const r = models.getResult(
+                        pat._doctorId, pat._id, content, new Date(Date.now()));
+                    data.addResult(r);
+                    res.redirect('/');
+                })
+                .catch((err) => {
+                    res.redirect('/add-result');
                 });
         },
         getAddPatientForm(req, res) {
@@ -96,21 +157,6 @@ module.exports = function(data, models, constants) {
             result.title = 'Добавяне на резултат';
 
             res.render('doctor/add-result-view', { result });
-        },
-        addResult(req, res) {
-            const pin = req.body.pin;
-            const content = req.body.content;
-
-            data.getPatient({ _pin: pin })
-                .then((pat) => {
-                    const result = models.getResult(
-                        pat._doctorId, pat._id, content, new Date(Date.now()));
-                    data.addResult(result);
-                    res.redirect('/');
-                })
-                .catch((err) => {
-                    res.redirect('/add-result');
-                });
         },
         getScheduleSchema(req, res) {
             if (!req.isAuthenticated()) {
