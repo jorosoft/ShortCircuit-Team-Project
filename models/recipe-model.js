@@ -1,4 +1,4 @@
-module.exports = function(constants, validator) {
+module.exports = function() {
     class Recipe {
         constructor(doctorId, patientId, expirationDate, content) {
             this.doctorId = doctorId;

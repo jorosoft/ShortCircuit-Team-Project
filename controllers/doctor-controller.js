@@ -1,4 +1,4 @@
-module.exports = function(data, models, validator) {
+module.exports = function(data, models, constants) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;

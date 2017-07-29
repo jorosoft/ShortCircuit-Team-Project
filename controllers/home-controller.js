@@ -1,4 +1,4 @@
-module.exports = function(data, models, validator) {
+module.exports = function(data, models, constants) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;
@@ -80,7 +80,8 @@ module.exports = function(data, models, validator) {
             const result = init(req, {});
             result.title = 'Справка рецепти';
 
-            req.checkBody('pin', 'ЕГН е необходим!').notEmpty();
+            req.checkBody(constants.RULES_PIN);
+
             const errors = req.validationErrors();
 
             if (errors) {

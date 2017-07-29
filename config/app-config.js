@@ -3,6 +3,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const validator = require('../common/validator');
 
 module.exports = function(data) {
     const app = express();
@@ -20,7 +21,11 @@ module.exports = function(data) {
         resave: true,
         saveUninitialized: true,
     }));
-    app.use(expressValidator());
+    app.use(expressValidator({
+        customValidators: {
+            isValidPin: validator.validatePin,
+        },
+    }));
 
     require('./passport-config')(app, data);
 

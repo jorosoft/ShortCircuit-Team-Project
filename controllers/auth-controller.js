@@ -1,4 +1,4 @@
-module.exports = function(data, models, validator) {
+module.exports = function(data, models, constants) {
     function init(req, result) {
         if (req.isAuthenticated()) {
             result.user = req.user.username;
@@ -49,9 +49,6 @@ module.exports = function(data, models, validator) {
                 });
         },
         register(req, res) {
-            validator.validatePasswordsMatch(req.body.password,
-                req.body.passConfirmation);
-
             const user = models
                 .getUser(req.body.username,
                     req.body.password,

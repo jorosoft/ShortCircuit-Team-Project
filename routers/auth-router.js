@@ -2,9 +2,9 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-module.exports = function(app, data, models, validator) {
+module.exports = function(app, data, models, constants) {
     const controller =
-        require('../controllers/auth-controller')(data, models, validator);
+        require('../controllers/auth-controller')(data, models, constants);
 
     const router = new express.Router();
 

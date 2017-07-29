@@ -1,8 +1,8 @@
 const express = require('express');
 
-module.exports = function(app, data, models, validator) {
+module.exports = function(app, data, models, constants) {
     const controller =
-        require('../controllers/patient-controller')(data, models, validator);
+        require('../controllers/patient-controller')(data, models, constants);
 
     const router = new express.Router();
 

@@ -1,4 +1,4 @@
-module.exports = function(constants, validator) {
+module.exports = function() {
     class Result {
         constructor(doctorId, patientId, content, date) {
             this.doctorId = doctorId;

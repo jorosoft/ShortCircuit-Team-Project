@@ -122,7 +122,7 @@ describe('Controllers Tests', () => {
                 reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
-                //TODO Possibly add restore() ???
+                // TODO Possibly add restore() ???
                 doctorController.getAddPatientForm(reqStub(), resStub());
 
                 expect(resStubRedirect).to.have.been

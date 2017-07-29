@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const crypto = require('crypto-js');
 
-const models = require('../../models')(null, null);
+const models = require('../../models')();
 
 describe('Models Tests', () => {
     describe('BaseUser Model Tests', () => {

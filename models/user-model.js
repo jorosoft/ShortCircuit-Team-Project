@@ -1,6 +1,6 @@
 const crypto = require('crypto-js');
 
-module.exports = function(constants, validator) {
+module.exports = function() {
     class BaseUser {
         constructor(user, pass) {
             this.user = user;

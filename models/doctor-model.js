@@ -1,4 +1,4 @@
-module.exports = function(constants, validator) {
+module.exports = function() {
     class Doctor {
         constructor(
             userId, regNumber, speciality, medCenter, city, hasPatients) {
