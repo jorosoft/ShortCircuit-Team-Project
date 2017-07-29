@@ -35,8 +35,13 @@ module.exports = function(data, models, constants) {
                 )
                 .then(([patient, doctor]) => {
                     patient._doctorId = doctor._id;
+                    doctor.hasPatients = true;
                     data.updatePatient(patient);
+                    data.updateDoctor(doctor);
                     res.redirect('/');
+                })
+                .catch((error) => {
+                    res.redirect('/add-patient')
                 });
         },
         addRecipe(req, res) {
@@ -101,7 +106,11 @@ module.exports = function(data, models, constants) {
                     const result = models.getResult(
                         pat._doctorId, pat._id, content, new Date(Date.now()));
                     data.addResult(result);
-                });
+                    res.redirect('/');
+                })
+                .catch((err) => {
+                    res.redirect('/add-result')
+                })
         },
         getScheduleSchema(req, res) {
             if (!req.isAuthenticated()) {
