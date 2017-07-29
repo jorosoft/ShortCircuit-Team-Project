@@ -80,6 +80,7 @@ module.exports = function(data, models, constants) {
             const result = init(req, {});
             result.title = 'Справка рецепти';
 
+            req.sanitize('pin').trim();
             req.checkBody(constants.RULES_PIN);
 
             const errors = req.validationErrors();

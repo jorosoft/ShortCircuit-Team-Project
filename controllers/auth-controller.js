@@ -49,6 +49,33 @@ module.exports = function(data, models, constants) {
                 });
         },
         register(req, res) {
+            const result = {};
+
+            req.sanitize('username').trim();
+            req.sanitize('password').trim();
+            req.sanitize('passConfirmation').trim();
+            req.sanitize('firstName').trim();
+            req.sanitize('lastName').trim();
+            req.checkBody(constants.RULES_USERNAME);
+            req.checkBody(constants.RULES_PASSWORD);
+            req.checkBody('passConfirmation', 'Паролите не съвпадат!')
+                .equals(req.body.password);
+            req.checkBody(constants.RULES_FIRSTNAME);
+            req.checkBody(constants.RULES_LASTNAME);
+
+            if (!req.body.oprtadio) {
+                req.checkBody(constants.RULES_OPTRADIO);
+            }
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { messages: errors };
+                res.render('auth/register-view', { result });
+
+                return;
+            }
+
             const user = models
                 .getUser(req.body.username,
                     req.body.password,
@@ -56,9 +83,27 @@ module.exports = function(data, models, constants) {
                     req.body.lastName,
                     req.body.optradio);
 
-            data.addUser(user)
-                .then((userId) => {
-                    if (req.body.optradio === 'doctorType') {
+            if (req.body.optradio === 'doctorType') {
+                req.sanitize('regNumber').trim();
+                req.sanitize('speciality').trim();
+                req.sanitize('medCenter').trim();
+                req.sanitize('city').trim();
+                req.checkBody(constants.RULES_REGNUMBER);
+                req.checkBody(constants.RULES_SPECIALITY);
+                req.checkBody(constants.RULES_CENTER);
+                req.checkBody(constants.RULES_CITYNAME);
+
+                errors = req.validationErrors();
+
+                if (errors) {
+                    result.flash = { messages: errors };
+                    res.render('auth/register-view', { result });
+
+                    return;
+                }
+
+                data.addUser(user)
+                    .then((userId) => {
                         const doctor = models.getDoctor(userId,
                             req.body.regNumber,
                             req.body.speciality,
@@ -66,16 +111,30 @@ module.exports = function(data, models, constants) {
                             req.body.city,
                             false);
 
-                        data.addDoctor(doctor);
-                    } else if (req.body.optradio === 'patientType') {
+                        return data.addDoctor(doctor);
+                    })
+                    .then(res.redirect('/login'));
+            } else if (req.body.optradio === 'patientType') {
+                req.sanitize('pin').trim();
+                req.checkBody(constants.RULES_PIN);
+
+                errors = req.validationErrors();
+
+                if (errors) {
+                    result.flash = { messages: errors };
+                    res.render('auth/register-view', { result });
+
+                    return;
+                }
+
+                data.addUser(user)
+                    .then((userId) => {
                         const patient = models.getPatient(userId, req.body.pin);
 
-                        data.addPatient(patient);
-                    }
-                })
-                .catch(console.log);
-
-            res.redirect('/login');
+                        return data.addPatient(patient);
+                    })
+                    .then(res.redirect('/login'));
+            }
         },
         logout(req, res) {
             req.logout();

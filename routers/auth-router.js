@@ -13,9 +13,25 @@ module.exports = function(app, data, models, constants) {
         .get('/register', controller.getRegisterForm)
         .post('/login',
             passport
-            .authenticate('local', { failureRedirect: '/login' }),
+            .authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: '/login',
+            }),
             (req, res) => {
-                res.redirect('/');
+                const result = {};
+                req.sanitize('username').trim();
+                req.sanitize('password').trim();
+                req.checkBody(constants.RULES_USERNAME);
+                req.checkBody(constants.RULES_PASSWORD);
+
+                const errors = req.validationErrors();
+
+                if (errors) {
+                    result.flash = { messages: errors };
+                    res.render('auth/login-view', { result });
+
+                    return;
+                }
             })
         .post('/register', controller.register)
         .get('/logout', controller.logout)
