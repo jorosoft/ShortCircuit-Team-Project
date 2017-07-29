@@ -1,12 +1,5 @@
 /* custom styles */
 
-.alert-small {
-    margin-bottom: 10px;
-    height: 30px;
-    line-height: 30px;
-    padding: 0px 15px;
-}
-
 .well-selected {
     background-color: #5bc0de;
 }
