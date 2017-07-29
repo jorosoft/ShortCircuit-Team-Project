@@ -11,6 +11,7 @@ const doctorController = require('../../controllers/doctor-controller')();
 
 let reqStubIsAuthenticated;
 let resStubRender;
+let resStubRedirect;
 let reqStub;
 let resStub;
 
@@ -27,10 +28,12 @@ describe('Controllers Tests', () => {
 
         resStub = sinon.stub().returns({
             render: () => {},
+            redirect: () => {},
         });
         reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
             .returns(true);
         resStubRender = sinon.stub(resStub(), 'render');
+        resStubRedirect = sinon.stub(resStub(), 'redirect');
     });
 
     afterEach(() => {
@@ -113,6 +116,19 @@ describe('Controllers Tests', () => {
             });
     });
     describe('Doctor Controller Tests', () => {
+        it('expect getAddPatientForm() to call redirect to correct route when unauthorized',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                //TODO Possibly add restore() ???
+                doctorController.getAddPatientForm(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
+            });
+
         it('expect getAddPatientForm() to call render with correct view param',
             () => {
                 doctorController.getAddPatientForm(reqStub(), resStub());
@@ -121,12 +137,36 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-patient-view');
             });
 
+        it('expect getAddResultForm() to call redirect with correct route when unauthorized',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                doctorController.getAddResultForm(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
+            });
+
         it('expect getAddResultForm() to call render with correct view param',
             () => {
                 doctorController.getAddResultForm(reqStub(), resStub());
 
                 expect(resStubRender).to.have.been
                     .calledWith('doctor/add-result-view');
+            });
+
+        it('expect getAddRecipeForm() to call redirect with correct route when unauthorized',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                doctorController.getAddRecipeForm(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
             });
 
         it('expect getAddRecipeForm() to call render with correct view param',
