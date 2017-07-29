@@ -41,7 +41,7 @@ module.exports = function(data, models, constants) {
                     res.redirect('/');
                 })
                 .catch((error) => {
-                    res.redirect('/add-patient')
+                    res.redirect('/add-patient');
                 });
         },
         addRecipe(req, res) {
@@ -109,8 +109,8 @@ module.exports = function(data, models, constants) {
                     res.redirect('/');
                 })
                 .catch((err) => {
-                    res.redirect('/add-result')
-                })
+                    res.redirect('/add-result');
+                });
         },
         getScheduleSchema(req, res) {
             if (!req.isAuthenticated()) {

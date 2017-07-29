@@ -53,10 +53,10 @@ module.exports = function(data, models, constants) {
         getPatientResults(req, res) {
             data.getPatient({ username: res.user })
                 .then((patient) => {
-                    data.getResults({ _patientId: patient._id })
-                        .then((results) => {
-                            res.send(JSON.stringify({ result: results }));
-                        });
+                    return data.getResults({ _patientId: patient._id });
+                })
+                .then((results) => {
+                    res.send(JSON.stringify({ result: results }));
                 });
         },
     };

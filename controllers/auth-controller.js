@@ -148,63 +148,60 @@ module.exports = function(data, models, constants) {
             const result = init(req, {});
             result.title = 'Профил';
 
-            data.getUsers({ username: result.user })
-                .then((users) => {
-                    const user = users[0];
-                    result.firstName = user._firstName;
-                    result.lastName = user._lastName;
+            const user = req.user;
+            result.firstName = user._firstName;
+            result.lastName = user._lastName;
 
-                    if (user._userType === 'patientType') {
-                        result.isPatient = true;
-                        data.getPatient({ _userId: user._id })
-                            .then((patient) => {
-                                result.pin = patient._pin;
-                                res.render('auth/profile-view', { result });
-                            });
-                    } else {
-                        result.isPatient = false;
-                        data.getDoctor({ _userId: user._id })
-                            .then((doctor) => {
-                                result.regNum = doctor._regNumber;
-                                result.speciality = doctor._speciality;
-                                result.medCenter = doctor._medCenter;
-                                result.city = doctor._city;
+            if (user._userType === 'patientType') {
+                result.isPatient = true;
 
-                                res.render('auth/profile-view', { result });
-                            });
-                    }
-                });
+                data.getPatient({ _userId: user._id })
+                    .then((patient) => {
+                        result.pin = patient._pin;
+                        res.render('auth/profile-view', { result });
+                    });
+            } else {
+                result.isPatient = false;
+
+                data.getDoctor({ _userId: user._id })
+                    .then((doctor) => {
+                        result.regNum = doctor._regNumber;
+                        result.speciality = doctor._speciality;
+                        result.medCenter = doctor._medCenter;
+                        result.city = doctor._city;
+
+                        res.render('auth/profile-view', { result });
+                    });
+            }
         },
         getUserProfile(req, res) {
             const result = {};
             result.title = 'Профил';
             result.user = req.params.username;
-            data.getUsers({ username: result.user })
-                .then((users) => {
-                    const user = users[0];
-                    result.firstName = user._firstName;
-                    result.lastName = user._lastName;
 
-                    if (user._userType === 'patientType') {
-                        result.isPatient = true;
-                        data.getPatient({ _userId: user._id })
-                            .then((patient) => {
-                                result.pin = patient._pin;
-                                res.render('auth/profile-view', { result });
-                            });
-                    } else {
-                        result.isPatient = false;
-                        data.getDoctor({ _userId: user._id })
-                            .then((doctor) => {
-                                result.regNum = doctor._regNumber;
-                                result.speciality = doctor._speciality;
-                                result.medCenter = doctor._medCenter;
-                                result.city = doctor._city;
+            const user = req.user;
+            result.firstName = user._firstName;
+            result.lastName = user._lastName;
 
-                                res.render('auth/profile-view', { result });
-                            });
-                    }
-                });
+            if (user._userType === 'patientType') {
+                result.isPatient = true;
+                data.getPatient({ _userId: user._id })
+                    .then((patient) => {
+                        result.pin = patient._pin;
+                        res.render('auth/profile-view', { result });
+                    });
+            } else {
+                result.isPatient = false;
+                data.getDoctor({ _userId: user._id })
+                    .then((doctor) => {
+                        result.regNum = doctor._regNumber;
+                        result.speciality = doctor._speciality;
+                        result.medCenter = doctor._medCenter;
+                        result.city = doctor._city;
+
+                        res.render('auth/profile-view', { result });
+                    });
+            }
         },
         unauthorized(req, res) {
             const result = init(req, {});
