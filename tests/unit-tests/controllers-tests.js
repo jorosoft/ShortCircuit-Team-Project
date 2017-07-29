@@ -208,5 +208,29 @@ describe('Controllers Tests', () => {
                 expect(resStubRender).to.have.been
                     .calledWith('doctor/add-recipe-view');
             });
+
+        it('expect getSchedule() to call redirect with correct route when unauthorized',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                doctorController.getSchedule(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
+            });
+
+        it('expect getPatientsList() to call redirect with correct route when unauthorized',
+            () => {
+                reqStubIsAuthenticated.restore();
+                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                    .returns(false);
+
+                doctorController.getPatientsList(reqStub(), resStub());
+
+                expect(resStubRedirect).to.have.been
+                    .calledWith('/unauthorized');
+            });
     });
 });

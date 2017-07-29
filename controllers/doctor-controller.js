@@ -232,7 +232,7 @@ module.exports = function(data, models, constants) {
         },
         getSchedule(req, res) {
             if (!req.isAuthenticated()) {
-                res.redirect('/unauthorized');
+                return res.redirect('/unauthorized');//TODO Possible remove
             }
 
             const result = init(req, {});
@@ -298,7 +298,7 @@ module.exports = function(data, models, constants) {
         },
         getPatientsList(req, res) {
             if (!req.isAuthenticated()) {
-                res.redirect('/unauthorized');
+                return res.redirect('/unauthorized');
             }
 
             const result = init(req, {});
