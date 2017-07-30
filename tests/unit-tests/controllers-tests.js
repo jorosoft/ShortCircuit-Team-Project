@@ -231,6 +231,46 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-patient-view');
             });
 
+        it('expect addRecipe() to call self view when have validation errors',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => {},
+                    validationErrors: () => [{}],
+                });
+
+                doctorController.addRecipe(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('doctor/add-recipe-view');
+            });
+
+        it('expect addResult() to call self view when have validation errors',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => {},
+                    validationErrors: () => [{}],
+                });
+
+                doctorController.addResult(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('doctor/add-result-view');
+            });
+
         it('expect getAddPatientForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
