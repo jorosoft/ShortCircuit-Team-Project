@@ -7,4 +7,27 @@ block content
     .panel.panel-default
         .panel-heading Начало
         .panel-body
-            h1 Начало    
+                
+
+            .media
+                .media-left.media-middle
+                    a
+                        img(src="./static/images/medilink.jpg" class="media-object")
+                .media-body
+                    h3(class="media-heading") MediLink+
+                    .panel.panel-default
+                        .panel-body
+                            p Система за връзка на лекари, аптекари и пациенти със следните функционалности с публичен достъп:
+                                ul(class="list-group")
+                                    li(class="list-group-item")
+                                        a(href="/recipes-search")
+                                            span(class="glyphicon glyphicon-menu-right")
+                                            span  Справка за издадени рецепти на пациент
+                                    li(class="list-group-item")
+                                        a(href="/personal-doctors")
+                                            span(class="glyphicon glyphicon-menu-right")
+                                            span  Списък на регистрираните лични лекари
+                                    li(class="list-group-item")
+                                        a(href="/doctors")
+                                            span(class="glyphicon glyphicon-menu-right")
+                                            span  Списък на регистрираните специалисти
