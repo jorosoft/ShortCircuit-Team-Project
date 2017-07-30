@@ -36,7 +36,7 @@ module.exports = function(app, data, models, constants) {
         .post('/register', controller.register)
         .get('/logout', controller.logout)
         .get('/profile', controller.getProfile)
-        .post('/profile', controller.getChangeProfileForm)
+        .post('/profile', controller.getChangeProfileForm) //TODO Should bring back old way
         .post('/profile-change', controller.changeProfileInfo)
         .get('/unauthorized', controller.unauthorized)
         .get('/user', passport
