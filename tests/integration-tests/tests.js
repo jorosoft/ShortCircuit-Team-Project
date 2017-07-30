@@ -111,17 +111,4 @@ describe('Routers Tests', () => {
     describe('Doctor Router Tests', () => {
 
     });
-
-    it('expect GET / to return 200', (done) => {
-        request(app)
-            .get('/')
-            .expect(200)
-            .end((err, res) => {
-                if  (err){
-                    return done(err);
-                }
-
-                return done();
-            });
-    })
 });
