@@ -166,6 +166,29 @@ describe('Controllers Tests', () => {
                 expect(resStubRender).to.have.been
                     .calledWith('home/recipes-search-view');
             });
+
+        it('expect recipesSearch() to call self view when validation errors',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    body: {
+                        pin: '973',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => {},
+                    validationErrors: () => [{}],
+                });
+
+                homeController.recipesSearch(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('home/recipes-search-view');
+            });
     });
     describe('Patient Controller Tests', () => {
         it('expect getReservationForm() to call redirect to correct route',
@@ -292,7 +315,7 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-patient-view');
             });
 
-        it('expect getAddResultForm() redirect to correct route when no auth',
+        it('expect getAddResultForm() to redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
                 reqStubIsAuthenticated = sinon
