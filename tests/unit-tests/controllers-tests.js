@@ -134,6 +134,29 @@ describe('Controllers Tests', () => {
                 expect(resStubRender).to.have.been
                     .calledWith('auth/unauthorized-view');
             });
+
+        it('',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    body: {
+                        pin: '973',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => 'string', //TODO Equals is not a function FIX
+                    validationErrors: () => [{}],
+                });
+
+                authController.register(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('auth/register-view');
+            });
     });
     describe('Home Controller Tests', () => {
         it('expect getHome() to call render with correct view param',

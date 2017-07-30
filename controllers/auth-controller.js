@@ -34,10 +34,24 @@ module.exports = function(data, models, constants) {
             res.render('auth/profile-change-view', { result });
         },
         changeProfileInfo(req, res) {
+            const result = {};
             const newMedCenter = req.body.medCenter;
             const newCity = req.body.city;
             const userId = req.user._id;
 
+            req.sanitize('city').trim();
+            req.sanitize('medCenter').trim();
+            req.checkBody(constants.RULES_CITYNAME);
+            req.checkBody(constants.RULES_CENTER);
+
+            let errors = req.validationErrors();
+            if (errors){
+                result.flash = { messages: errors };
+                res.render('auth/profile-change-view', { result });
+                return;
+            }
+
+            console.log('here');
             data.getDoctor({
                     _userId: userId,
                 })
@@ -46,6 +60,9 @@ module.exports = function(data, models, constants) {
                     doctor._city = newCity;
                     data.updateDoctor(doctor);
                     res.redirect('/');
+                })
+                .catch((err) => {
+                    console.log('Not supposed to reach this!');
                 });
         },
         register(req, res) {
