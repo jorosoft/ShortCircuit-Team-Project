@@ -105,10 +105,123 @@ describe('Routers Tests', () => {
     });
 
     describe('Patient Router Tests', () => {
+        it('expect GET /reservation to return 302', (done) => {
+            request(app)
+                .get('/reservation')
+                .expect(302)
+                .end((err, res) => {
+                    if (err) {
+                       return done(err);
+                    }
 
+                    return done();
+                });
+        });
+
+        it('expect GET /show-results to return 302', (done) => {
+            request(app)
+                .get('/show-results')
+                .expect(302)
+                .end((err, res) => {
+                    if  (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
     });
 
     describe('Doctor Router Tests', () => {
+        it('expect GET /add-patient to return 302', (done) => {
+            request(app)
+                .get('/add-patient')
+                .expect(302)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
 
+                    return done();
+                });
+        });
+
+        it('expect POST /add-patient to return 200', (done) => {
+            request(app)
+                .post('/add-patient')
+                .expect(200)
+                .end((err, res) => {
+                    if (err){
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+
+        it('expect GET /add-recipe to return 302', (done) => {
+            request(app)
+                .get('/add-recipe')
+                .expect(302)
+                .end((err, res) => {
+                    if  (err){
+                        return done(err);
+                    }
+
+                    return done();
+                })
+        });
+
+        it('expect POST /add-recipe to return 200', (done) => {
+            request(app)
+                .post('/add-recipe')
+                .expect(200)
+                .end((err, res) => {
+                    if (err){
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+
+        it('expect GET /add-result to return 302', (done) => {
+            request(app)
+                .get('/add-result')
+                .expect(302)
+                .end((err, res) => {
+                    if  (err){
+                        return done(err);
+                    }
+
+                    return done();
+                })
+        });
+
+        it('expect POST /add-result to return 200', (done) => {
+            request(app)
+                .post('/add-result')
+                .expect(200)
+                .end((err, res) => {
+                    if  (err){
+                        return done(err);
+                    }
+
+                    return done();
+                })
+        });
+
+        it('expect GET /schedule-schema to return 302', (done) =>{
+            request(app)
+                .get('/schedule-schema')
+                .expect(302)
+                .end((err, res) => {
+                    if  (err){
+                        return done(err);
+                    }
+
+                    return done();
+                })
+        });
     });
 });
