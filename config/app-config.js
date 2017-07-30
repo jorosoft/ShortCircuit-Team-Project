@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const validator = require('../common/validator');
+const constants = require('../common/constants');
+const models = require('../models')();
 
 module.exports = function(data) {
     const app = express();
@@ -28,6 +30,7 @@ module.exports = function(data) {
     }));
 
     require('./passport-config')(app, data);
+    require('../routers')(app, data, models, constants);
 
     return app;
 };
