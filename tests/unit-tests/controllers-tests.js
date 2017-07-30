@@ -4,7 +4,15 @@ const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 const { expect } = chai;
 
-const authController = require('../../controllers/auth-controller')();
+const data = require('../../data')();
+const dataGetPatientStub = sinon.stub(data, 'getPatient').resolves({});
+const dataGetDoctorStub = sinon.stub(data, 'getDoctor').resolves({});
+const dataStub = sinon.stub().returns({
+    getPatient: dataGetPatientStub,
+    getDoctor: dataGetDoctorStub,
+});
+
+const authController = require('../../controllers/auth-controller')(dataStub());
 const homeController = require('../../controllers/home-controller')();
 const patientController = require('../../controllers/patient-controller')();
 const doctorController = require('../../controllers/doctor-controller')();
@@ -58,12 +66,46 @@ describe('Controllers Tests', () => {
                     .calledWith('auth/register-view');
             });
 
-        it('expect getChangeProfileForm() to call render with correct view param',
+        it('expect getChangeProfileForm() to call render with correct param',
             () => {
                 authController.getChangeProfileForm(reqStub(), resStub());
 
                 expect(resStubRender).to.have.been
                     .calledWith('auth/profile-change-view');
+            });
+
+        it('expect getProfile() to call data.getPatient() when user is patient',
+            () => {
+                reqStub.returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: 'patientType',
+                    },
+                });
+
+                authController.getProfile(reqStub(), resStub());
+
+                expect(dataGetPatientStub).to.have.been
+                    .calledWith();
+            });
+
+        it('expect getProfile() to call data.getDoctor() when user is doctor',
+            () => {
+                reqStub.returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: 'doctorType',
+                    },
+                });
+
+                authController.getProfile(reqStub(), resStub());
+
+                expect(dataGetDoctorStub).to.have.been
+                    .calledWith();
             });
 
         it('expect unauthorized() to call render with correct view param',
