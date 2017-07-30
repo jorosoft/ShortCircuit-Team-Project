@@ -10,7 +10,6 @@ module.exports = function(app, data, models, constants) {
 
     router
         .get('/login', controller.getLoginForm)
-        .get('/register', controller.getRegisterForm)
         .post('/login',
             (req, res) => {
                 const result = {};
@@ -33,15 +32,15 @@ module.exports = function(app, data, models, constants) {
                         failureRedirect: '/login',
                     })(req, res);
             })
+        .get('/register', controller.getRegisterForm)
         .post('/register', controller.register)
         .get('/logout', controller.logout)
         .get('/profile', controller.getProfile)
-        .post('/profile', controller.getChangeProfileForm) //TODO Should bring back old way
+        .post('/profile', controller.getChangeProfileForm) // TODO Should bring back old way
         .post('/profile-change', controller.changeProfileInfo)
         .get('/unauthorized', controller.unauthorized)
         .get('/user', passport
-            .authenticate('jwt', { session: false }), controller.getLoggedUser)
-        .get('/profile/:username', controller.getUserProfile);
+            .authenticate('jwt', { session: false }), controller.getLoggedUser);
 
     app.use('/', router);
 };

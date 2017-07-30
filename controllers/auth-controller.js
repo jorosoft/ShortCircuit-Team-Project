@@ -174,35 +174,6 @@ module.exports = function(data, models, constants) {
                     });
             }
         },
-        getUserProfile(req, res) {
-            const result = {};
-            result.title = 'Профил';
-            result.user = req.params.username;
-
-            const user = req.user;
-            result.firstName = user._firstName;
-            result.lastName = user._lastName;
-
-            if (user._userType === 'patientType') {
-                result.isPatient = true;
-                data.getPatient({ _userId: user._id })
-                    .then((patient) => {
-                        result.pin = patient._pin;
-                        res.render('auth/profile-view', { result });
-                    });
-            } else {
-                result.isPatient = false;
-                data.getDoctor({ _userId: user._id })
-                    .then((doctor) => {
-                        result.regNum = doctor._regNumber;
-                        result.speciality = doctor._speciality;
-                        result.medCenter = doctor._medCenter;
-                        result.city = doctor._city;
-
-                        res.render('auth/profile-view', { result });
-                    });
-            }
-        },
         unauthorized(req, res) {
             const result = init(req, {});
             result.title = 'ГРЕШКА!';
