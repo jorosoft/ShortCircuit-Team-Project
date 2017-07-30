@@ -37,8 +37,11 @@ block content
                                     tr
                                         td д-р !{val._doctorFirstName} !{val._doctorLastName}
                                         td !{val._doctorRegNumber}
-                                        td !{val._doctorSpeciality}                                
-                                        td !{val._expirationDate}
+                                        td !{val._doctorSpeciality} 
+                                        if val._expirationDate                               
+                                            td !{val._expirationDate}
+                                        else
+                                            td няма
                                         td !{val._content}                                
     
     script(src="./static/scripts/requester.js")

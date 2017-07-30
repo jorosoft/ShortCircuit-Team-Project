@@ -77,19 +77,24 @@ module.exports = function(data, models, constants) {
 
             const patientEgn = req.body.pin;
             const content = req.body.content;
-            const doctorId = req.user._id;
+            const userId = req.user._id;
             const expDate = req.body.expDate;
-            const dateParts = expDate.split('.');
-            const parsedDate =
-                new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+            let parsedDate = null;
 
-            data.getPatient({
-                    _pin: patientEgn,
-                })
-                .then((patient) => {
+            if (expDate) {
+                const dateParts = expDate.split('.');
+                parsedDate =
+                    new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+            }
+
+            Promise.all([
+                    data.getPatient({ _pin: patientEgn }),
+                    data.getDoctor({ _userId: userId }),
+                ])
+                .then(([patient, doctor]) => {
                     data.addRecipe(
                         models
-                        .getRecipe(doctorId, patient._id, parsedDate, content)
+                        .getRecipe(doctor._id, patient._id, parsedDate, content)
                     );
                     res.redirect('/');
                 })
@@ -232,7 +237,7 @@ module.exports = function(data, models, constants) {
         },
         getSchedule(req, res) {
             if (!req.isAuthenticated()) {
-                return res.redirect('/unauthorized');//TODO Possible remove
+                return res.redirect('/unauthorized'); // TODO Possible remove
             }
 
             const result = init(req, {});

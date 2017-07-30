@@ -67,8 +67,11 @@ data.addUser(user)
         patientId = patId;
         const recipe = models.getRecipe(
             doctorId, patientId, new Date('2017-12-12'), 'content....... ');
+        const recipe2 = models.getRecipe(
+            doctorId, patientId, new Date('2017-10-10'), 'lalalalla');
 
         data.addRecipe(recipe);
+        data.addRecipe(recipe2);
     })
     .then(() => {
         return data.getUsers({ username: 'pena' });

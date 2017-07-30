@@ -115,19 +115,20 @@ module.exports = function(data, models, constants) {
 
                     return Promise.all([
                         data.getUsers({}),
-                        data.getDoctors(),
+                        data.getDoctors({}),
                     ]);
                 })
                 .then(([users, doctors]) => {
                     result.recipes.forEach((recipe) => {
-                        recipe._expirationDate = recipe._expirationDate
-                            .toLocaleDateString();
+                        recipe._expirationDate = recipe._expirationDate ?
+                            recipe._expirationDate.toLocaleDateString() : null;
+
                         doctors.forEach((doc) => {
                             users.forEach((user) => {
                                 if ((doc._userId.toString() ===
                                         user._id.toString()) &&
-                                    recipe._doctorId.toString() ===
-                                    doc._id.toString()) {
+                                    (recipe._doctorId.toString() ===
+                                        doc._id.toString())) {
                                     recipe._doctorFirstName = user._firstName;
                                     recipe._doctorLastName = user._lastName;
                                     recipe._doctorSpeciality = doc._speciality;
