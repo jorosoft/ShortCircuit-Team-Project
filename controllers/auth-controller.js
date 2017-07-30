@@ -51,7 +51,6 @@ module.exports = function(data, models, constants) {
                 return;
             }
 
-            console.log('here');
             data.getDoctor({
                     _userId: userId,
                 })

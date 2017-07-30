@@ -157,6 +157,29 @@ describe('Controllers Tests', () => {
                 expect(resStubRender).to.have.been
                     .calledWith('auth/register-view');
             });
+
+        it('expect changeProfileInfo() to call self when validation errors',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    body: {
+                        pin: '973',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => {},
+                    validationErrors: () => [{}],
+                });
+
+                authController.changeProfileInfo(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('auth/profile-change-view');
+            })
     });
     describe('Home Controller Tests', () => {
         it('expect getHome() to call render with correct view param',
