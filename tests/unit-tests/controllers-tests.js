@@ -7,15 +7,21 @@ const { expect } = chai;
 const data = require('../../data')();
 const dataGetPatientStub = sinon.stub(data, 'getPatient').resolves({});
 const dataGetDoctorStub = sinon.stub(data, 'getDoctor').resolves({});
+const dataGetDoctorsStub = sinon.stub(data, 'getDoctors').resolves({});
 const dataStub = sinon.stub().returns({
     getPatient: dataGetPatientStub,
     getDoctor: dataGetDoctorStub,
+    getDoctors: dataGetDoctorsStub,
 });
 
-const authController = require('../../controllers/auth-controller')(dataStub());
-const homeController = require('../../controllers/home-controller')();
-const patientController = require('../../controllers/patient-controller')();
-const doctorController = require('../../controllers/doctor-controller')();
+const authController =
+    require('../../controllers/auth-controller')(dataStub());
+const homeController =
+    require('../../controllers/home-controller')(dataStub());
+const patientController =
+    require('../../controllers/patient-controller')(dataStub());
+const doctorController =
+    require('../../controllers/doctor-controller')(dataStub());
 
 let reqStubIsAuthenticated;
 let resStubRender;
@@ -140,7 +146,7 @@ describe('Controllers Tests', () => {
                     .calledWith('home/doctors-view');
             });
 
-        it('expect getRecipesSearchView() to call render with correct view param',
+        it('expect getRecipesSearchView() to call render with correct param',
             () => {
                 homeController.getRecipesSearchView(reqStub(), resStub());
 
@@ -152,7 +158,8 @@ describe('Controllers Tests', () => {
         it('expect getReservationForm() to call redirect to correct route',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 patientController.getReservationForm(reqStub(), resStub());
@@ -172,7 +179,8 @@ describe('Controllers Tests', () => {
         it('expect getResults() to call redirect to correct route',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 patientController.getResults(reqStub(), resStub());
@@ -190,13 +198,13 @@ describe('Controllers Tests', () => {
             });
     });
     describe('Doctor Controller Tests', () => {
-        it('expect getAddPatientForm() to call redirect to correct route when unauthorized',
+        it('expect getAddPatientForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
-                // TODO Possibly add restore() ???
                 doctorController.getAddPatientForm(reqStub(), resStub());
 
                 expect(resStubRedirect).to.have.been
@@ -211,10 +219,11 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-patient-view');
             });
 
-        it('expect getAddResultForm() to call redirect with correct route when unauthorized',
+        it('expect getAddResultForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 doctorController.getAddResultForm(reqStub(), resStub());
@@ -231,10 +240,11 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-result-view');
             });
 
-        it('expect getAddRecipeForm() to call redirect with correct route when unauthorized',
+        it('expect getAddRecipeForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 doctorController.getAddRecipeForm(reqStub(), resStub());
@@ -251,10 +261,11 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-recipe-view');
             });
 
-        it('expect getSchedule() to call redirect with correct route when unauthorized',
+        it('expect getSchedule() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 doctorController.getSchedule(reqStub(), resStub());
@@ -263,10 +274,11 @@ describe('Controllers Tests', () => {
                     .calledWith('/unauthorized');
             });
 
-        it('expect getPatientsList() to call redirect with correct route when unauthorized',
+        it('expect getPatientsList() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
-                reqStubIsAuthenticated = sinon.stub(reqStub(), 'isAuthenticated')
+                reqStubIsAuthenticated = sinon
+                    .stub(reqStub(), 'isAuthenticated')
                     .returns(false);
 
                 doctorController.getPatientsList(reqStub(), resStub());
