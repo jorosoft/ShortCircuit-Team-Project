@@ -179,7 +179,7 @@ describe('Controllers Tests', () => {
 
                 expect(resStubRender).to.have.been
                     .calledWith('auth/profile-change-view');
-            })
+            });
     });
     describe('Home Controller Tests', () => {
         it('expect getHome() to call render with correct view param',

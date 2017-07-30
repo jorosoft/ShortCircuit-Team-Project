@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 module.exports = function(data, models, constants) {
     function init(req, result) {
         if (req.isAuthenticated()) {
@@ -64,6 +66,44 @@ module.exports = function(data, models, constants) {
                     console.log('Not supposed to reach this!');
                 });
         },
+        login(req, res, next) {
+            const result = {};
+            req.sanitize('username').trim();
+            req.sanitize('password').trim();
+            req.checkBody(constants.RULES_USERNAME);
+            req.checkBody(constants.RULES_PASSWORD);
+
+            const errors = req.validationErrors();
+
+            if (errors) {
+                result.flash = { messages: errors };
+                res.render('auth/login-view', { result });
+
+                return next();
+            }
+
+            return passport.authenticate('local', function(err, user, info) {
+                if (err) {
+                    return next(err);
+                }
+
+                if (!user) {
+                    req.toastr.error('Невалидни данни за достъп!');
+
+                    return res.redirect('/login');
+                }
+
+                return req.logIn(user, function(loginErr) {
+                    if (loginErr) {
+                        return next(loginErr);
+                    }
+
+                    req.toastr.success('Добре дошъл, ' + user.username);
+
+                    return res.redirect('/');
+                });
+            })(req, res, next);
+        },
         register(req, res) {
             const result = {};
 
@@ -129,7 +169,11 @@ module.exports = function(data, models, constants) {
 
                         return data.addDoctor(doctor);
                     })
-                    .then(res.redirect('/login'));
+                    .then(res.redirect('/login'))
+                    .catch((err) => {
+                        req.toastr.error(err);
+                        res.redirect('/register');
+                    });
             } else if (req.body.optradio === 'patientType') {
                 req.sanitize('pin').trim();
                 req.checkBody(constants.RULES_PIN);
@@ -149,11 +193,17 @@ module.exports = function(data, models, constants) {
 
                         return data.addPatient(patient);
                     })
-                    .then(res.redirect('/login'));
+                    .then(res.redirect('/login'))
+                    .catch((err) => {
+                        req.toastr.error(err);
+                        res.redirect('/register');
+                    });
             }
         },
         logout(req, res) {
             req.logout();
+            req.toastr.success('Успешен изход!');
+
             res.status(200).redirect('/');
         },
         getProfile(req, res) {

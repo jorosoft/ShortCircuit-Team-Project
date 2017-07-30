@@ -3,6 +3,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const toastr = require('express-toastr');
 const validator = require('../common/validator');
 const constants = require('../common/constants');
 const models = require('../models')();
@@ -28,6 +30,13 @@ module.exports = function(data) {
             isValidPin: validator.validatePin,
         },
     }));
+
+    app.use(flash());
+    app.use(toastr());
+    app.use((req, res, next) => {
+        res.locals.toasts = req.toastr.render;
+        next();
+    });
 
     require('./passport-config')(app, data);
     require('../routers')(app, data, models, constants);

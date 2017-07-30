@@ -10,28 +10,7 @@ module.exports = function(app, data, models, constants) {
 
     router
         .get('/login', controller.getLoginForm)
-        .post('/login',
-            (req, res) => {
-                const result = {};
-                req.sanitize('username').trim();
-                req.sanitize('password').trim();
-                req.checkBody(constants.RULES_USERNAME);
-                req.checkBody(constants.RULES_PASSWORD);
-
-                const errors = req.validationErrors();
-
-                if (errors) {
-                    result.flash = { messages: errors };
-                    res.render('auth/login-view', { result });
-
-                    return;
-                }
-                passport
-                    .authenticate('local', {
-                        successRedirect: '/',
-                        failureRedirect: '/login',
-                    })(req, res);
-            })
+        .post('/login', controller.login)
         .get('/register', controller.getRegisterForm)
         .post('/register', controller.register)
         .get('/logout', controller.logout)

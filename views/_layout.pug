@@ -4,10 +4,11 @@ html(lang="bg")
         meta(charset="UTF-8")
         block page-title
         link(rel="stylesheet", href="./libs/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="./libs/toastr/build/toastr.min.css")        
         link(rel="stylesheet", href="./static/styles/style.css")  
         link(rel="shortcut icon" type="image/x-icon" href="./static/images/favicon.png")             
     body
-        nav(class="navbar navbar-default")
+        nav(class="navbar navbar-default")            
             .container-fluid
                 .navbar-header
                     button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
@@ -71,6 +72,9 @@ html(lang="bg")
                  
         script(src="./libs/jquery/dist/jquery.min.js")
         script(src="./libs/bootstrap/dist/js/bootstrap.min.js")          
-
+        script(src="./libs/toastr/build/toastr.min.js")
+        script(src="./static/scripts/config/toastr-config.js")
+              
+        != toasts()
         .content.container      
             block content   
