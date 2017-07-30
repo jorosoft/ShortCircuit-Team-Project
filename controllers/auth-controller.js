@@ -44,8 +44,8 @@ module.exports = function(data, models, constants) {
             req.checkBody(constants.RULES_CITYNAME);
             req.checkBody(constants.RULES_CENTER);
 
-            let errors = req.validationErrors();
-            if (errors){
+            const errors = req.validationErrors();
+            if (errors) {
                 result.flash = { messages: errors };
                 res.render('auth/profile-change-view', { result });
                 return;

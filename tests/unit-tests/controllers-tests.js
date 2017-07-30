@@ -148,7 +148,7 @@ describe('Controllers Tests', () => {
                         pin: '973',
                     },
                     sanitize: () => 'some',
-                    checkBody: () => 'string', //TODO Equals is not a function FIX
+                    checkBody: () => 'string', // TODO Equals is not a function FIX
                     validationErrors: () => [{}],
                 });
 
