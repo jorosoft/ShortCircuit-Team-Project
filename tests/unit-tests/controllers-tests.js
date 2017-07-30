@@ -13,15 +13,28 @@ const dataStub = sinon.stub().returns({
     getDoctor: dataGetDoctorStub,
     getDoctors: dataGetDoctorsStub,
 });
+const cStub = sinon.stub().returns({
+    RULES_PIN: '',
+    RULES_USERNAME: '',
+    RULES_PASSWORD: '',
+    RULES_FIRSTNAME: '',
+    RULES_LASTNAME: '',
+    RULES_OPTRADIO: '',
+    RULES_REGNUMBER: '',
+    RULES_SPECIALITY: '',
+    RULES_CENTER: '',
+    RULES_CITYNAME: '',
+    RULES_CONTENT: '',
+});
 
 const authController =
-    require('../../controllers/auth-controller')(dataStub());
+    require('../../controllers/auth-controller')(dataStub(), null, cStub());
 const homeController =
-    require('../../controllers/home-controller')(dataStub());
+    require('../../controllers/home-controller')(dataStub(), null, cStub());
 const patientController =
-    require('../../controllers/patient-controller')(dataStub());
+    require('../../controllers/patient-controller')(dataStub(), null, cStub());
 const doctorController =
-    require('../../controllers/doctor-controller')(dataStub());
+    require('../../controllers/doctor-controller')(dataStub(), null, cStub());
 
 let reqStubIsAuthenticated;
 let resStubRender;
@@ -198,6 +211,26 @@ describe('Controllers Tests', () => {
             });
     });
     describe('Doctor Controller Tests', () => {
+        it('expect addPatient() to call self view when have validation errors',
+            () => {
+                reqStub = sinon.stub().returns({
+                    isAuthenticated: () => {},
+                    user: {
+                        username: '',
+                        password: '',
+                        _userType: '',
+                    },
+                    sanitize: () => 'some',
+                    checkBody: () => {},
+                    validationErrors: () => [{}],
+                });
+
+                doctorController.addPatient(reqStub(), resStub());
+
+                expect(resStubRender).to.have.been
+                    .calledWith('doctor/add-patient-view');
+            });
+
         it('expect getAddPatientForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
