@@ -49,7 +49,7 @@ module.exports = function(data, models, constants) {
                 )
                 .then(([patient, doctor]) => {
                     patient._doctorId = doctor._id;
-                    doctor.hasPatients = true;
+                    doctor._hasPatients = true;
                     data.updatePatient(patient);
                     data.updateDoctor(doctor);
                     res.redirect('/');
