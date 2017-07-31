@@ -1,9 +1,9 @@
 const request = require('supertest');
 const constants = require('../../common/constants');
-let models = require('../../models')();
-let repository = require('../../data/repository')(constants);
-let data = require('../../data')(repository, models);
-let app = require('../../config/app-config')(data);
+const models = require('../../models')();
+const repository = require('../../data/repository')(constants);
+const data = require('../../data')(repository, models);
+const app = require('../../config/app-config')(data);
 
 
 describe('Routers Tests', () => {
@@ -21,17 +21,43 @@ describe('Routers Tests', () => {
                 });
         });
 
-        it('expect GET /register to return 200', (done) => {
-           request(app)
-               .get('/register')
-               .expect(200)
-               .end((err, res) => {
+        it('expect POST /login to return 200', (done) => {
+            request(app)
+                .post('/login')
+                .expect(200)
+                .end((err, res) => {
                     if (err) {
                         return done(err);
                     }
 
                     return done();
-               });
+                });
+        });
+
+        it('expect GET /register to return 200', (done) => {
+            request(app)
+                .get('/register')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+
+        it('expect POST /register to return 200', (done) => {
+            request(app)
+                .post('/register')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
         });
 
         it('expect GET /logout to return 302', (done) => {
@@ -39,13 +65,52 @@ describe('Routers Tests', () => {
                 .get('/logout')
                 .expect(302)
                 .end((err, res) => {
-                    if (err){
+                    if (err) {
                         return done(err);
                     }
 
                     return done();
-                })
-        })
+                });
+        });
+
+        it('expect GET /profile to return 302', (done) => {
+            request(app)
+                .get('/profile')
+                .expect(302)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+
+         it('expect POST /profile to return 200', (done) => {
+            request(app)
+                .post('/profile')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+
+        it('expect get /unauthorized to return 200', (done) => {
+            request(app)
+                .get('/unauthorized')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
     });
 
     describe('Home Router Tests', () => {
@@ -148,7 +213,7 @@ describe('Routers Tests', () => {
                 .expect(302)
                 .end((err, res) => {
                     if (err) {
-                       return done(err);
+                        return done(err);
                     }
 
                     return done();
@@ -160,7 +225,7 @@ describe('Routers Tests', () => {
                 .get('/show-results')
                 .expect(302)
                 .end((err, res) => {
-                    if  (err) {
+                    if (err) {
                         return done(err);
                     }
 
@@ -188,7 +253,7 @@ describe('Routers Tests', () => {
                 .post('/add-patient')
                 .expect(200)
                 .end((err, res) => {
-                    if (err){
+                    if (err) {
                         return done(err);
                     }
 
@@ -201,12 +266,12 @@ describe('Routers Tests', () => {
                 .get('/add-recipe')
                 .expect(302)
                 .end((err, res) => {
-                    if  (err){
+                    if (err) {
                         return done(err);
                     }
 
                     return done();
-                })
+                });
         });
 
         it('expect POST /add-recipe to return 200', (done) => {
@@ -214,7 +279,7 @@ describe('Routers Tests', () => {
                 .post('/add-recipe')
                 .expect(200)
                 .end((err, res) => {
-                    if (err){
+                    if (err) {
                         return done(err);
                     }
 
@@ -227,12 +292,12 @@ describe('Routers Tests', () => {
                 .get('/add-result')
                 .expect(302)
                 .end((err, res) => {
-                    if  (err){
+                    if (err) {
                         return done(err);
                     }
 
                     return done();
-                })
+                });
         });
 
         it('expect POST /add-result to return 200', (done) => {
@@ -240,25 +305,25 @@ describe('Routers Tests', () => {
                 .post('/add-result')
                 .expect(200)
                 .end((err, res) => {
-                    if  (err){
+                    if (err) {
                         return done(err);
                     }
 
                     return done();
-                })
+                });
         });
 
-        it('expect GET /schedule-schema to return 302', (done) =>{
+        it('expect GET /schedule-schema to return 302', (done) => {
             request(app)
                 .get('/schedule-schema')
                 .expect(302)
                 .end((err, res) => {
-                    if  (err){
+                    if (err) {
                         return done(err);
                     }
 
                     return done();
-                })
+                });
         });
     });
 });
