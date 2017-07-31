@@ -8,7 +8,44 @@ let app = require('../../config/app-config')(data);
 
 describe('Routers Tests', () => {
     describe('Auth Router Tests', () => {
+        it('expect GET /login to return 200', (done) => {
+            request(app)
+                .get('/login')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
 
+                    return done();
+                });
+        });
+
+        it('expect GET /register to return 200', (done) => {
+           request(app)
+               .get('/register')
+               .expect(200)
+               .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+               });
+        });
+
+        it('expect GET /logout to return 302', (done) => {
+            request(app)
+                .get('/logout')
+                .expect(302)
+                .end((err, res) => {
+                    if (err){
+                        return done(err);
+                    }
+
+                    return done();
+                })
+        })
     });
 
     describe('Home Router Tests', () => {
