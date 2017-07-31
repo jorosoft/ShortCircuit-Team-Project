@@ -15,7 +15,7 @@ block content
                         span(class="glyphicon glyphicon-user")
                     input(type="text" id="pin" class="form-control" name="pin" placeholder="ЕГН" aria-describedby="sizing-addon3")
                     input(type="text" id="content" class="form-control" name="content" placeholder="Съдържание" aria-describedby="sizing-addon3")
-                    input(type="text" id="datepicker" name="expDate" placeholder="Срок на валидност")
+                    input(type="text" id="datepicker" name="expDate" placeholder="Срок на валидност" readonly)
                     script $('#datepicker').datepicker({ minDate: 0 });
                 include ../error-messages
                 .form-group

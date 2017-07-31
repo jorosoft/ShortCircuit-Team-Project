@@ -121,7 +121,8 @@ module.exports = function(data, models, constants) {
                 .then(([users, doctors]) => {
                     result.recipes.forEach((recipe) => {
                         recipe._expirationDate = recipe._expirationDate ?
-                            recipe._expirationDate.toLocaleDateString() : null;
+                            recipe._expirationDate.toLocaleDateString('bg-BG') :
+                            null;
 
                         doctors.forEach((doc) => {
                             users.forEach((user) => {

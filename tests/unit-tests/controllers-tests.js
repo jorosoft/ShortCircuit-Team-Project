@@ -135,29 +135,6 @@ describe('Controllers Tests', () => {
                     .calledWith('auth/unauthorized-view');
             });
 
-        it('',
-            () => {
-                reqStub = sinon.stub().returns({
-                    isAuthenticated: () => {},
-                    user: {
-                        username: '',
-                        password: '',
-                        _userType: '',
-                    },
-                    body: {
-                        pin: '973',
-                    },
-                    sanitize: () => 'some',
-                    checkBody: () => 'string', // TODO Equals is not a function FIX
-                    validationErrors: () => [{}],
-                });
-
-                authController.register(reqStub(), resStub());
-
-                expect(resStubRender).to.have.been
-                    .calledWith('auth/register-view');
-            });
-
         it('expect changeProfileInfo() to call self when validation errors',
             () => {
                 reqStub = sinon.stub().returns({
@@ -361,7 +338,7 @@ describe('Controllers Tests', () => {
                     .calledWith('doctor/add-patient-view');
             });
 
-        it('expect getAddResultForm() to redirect to correct route when no auth',
+        it('expect getAddResultForm() redirect to correct route when no auth',
             () => {
                 reqStubIsAuthenticated.restore();
                 reqStubIsAuthenticated = sinon

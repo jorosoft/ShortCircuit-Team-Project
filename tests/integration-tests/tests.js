@@ -86,7 +86,7 @@ describe('Routers Tests', () => {
                 });
         });
 
-         it('expect POST /profile to return 200', (done) => {
+        it('expect POST /profile to return 200', (done) => {
             request(app)
                 .post('/profile')
                 .expect(200)
