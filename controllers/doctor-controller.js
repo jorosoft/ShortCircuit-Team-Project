@@ -52,9 +52,12 @@ module.exports = function(data, models, constants) {
                     doctor.hasPatients = true;
                     data.updatePatient(patient);
                     data.updateDoctor(doctor);
+
+                    req.toastr.success('Пациентът добавен успешно!');
                     res.redirect('/');
                 })
                 .catch((error) => {
+                    req.toastr.success('Моля въведето ЕГН на пациента отново!');
                     res.redirect('/add-patient');
                 });
         },
@@ -96,9 +99,12 @@ module.exports = function(data, models, constants) {
                         models
                         .getRecipe(doctor._id, patient._id, parsedDate, content)
                     );
+
+                    req.toastr.success('Рецептата добавена успешно!');
                     res.redirect('/');
                 })
                 .catch((err) => {
+                    req.toastr.error('Моля въведете рецептата отново!');
                     res.redirect('/add-recipe');
                 });
         },
@@ -129,9 +135,12 @@ module.exports = function(data, models, constants) {
                         pat[0]._id, content,
                         new Date(Date.now()));
                     data.addResult(r);
+
+                    req.toastr.success('Резултатът добавен успешно!');
                     res.redirect('/');
                 })
                 .catch((err) => {
+                    req.toastr.error('Моля въвете резултат отново!');
                     res.redirect('/add-result');
                 });
         },

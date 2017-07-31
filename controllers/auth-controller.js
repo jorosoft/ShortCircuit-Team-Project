@@ -60,6 +60,8 @@ module.exports = function(data, models, constants) {
                     doctor._medCenter = newMedCenter;
                     doctor._city = newCity;
                     data.updateDoctor(doctor);
+
+                    req.toastr.success('Медицински център и град променени успешно!');
                     res.redirect('/');
                 })
                 .catch((err) => {
