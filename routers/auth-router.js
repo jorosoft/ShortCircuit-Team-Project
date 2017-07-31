@@ -18,8 +18,7 @@ module.exports = function(app, data, models, constants) {
         .post('/profile', controller.getChangeProfileForm)
         .post('/profile-change', controller.changeProfileInfo)
         .get('/unauthorized', controller.unauthorized)
-        .get('/user', passport
-            .authenticate('jwt', { session: false }), controller.getLoggedUser);
+        .get('/user', controller.getLoggedUser);
 
     app.use('/', router);
 };
