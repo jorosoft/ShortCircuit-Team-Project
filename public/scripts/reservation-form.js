@@ -8,7 +8,7 @@ let selectedDate;
 const host = document.location.host;
 const port = document.location.port;
 
-const socket = io.connect('http://' + host + port);
+const socket = io.connect('http://' + host + ':' + port);
 
 socket.on('new-reservation', function(reservation) {
     if (reservation._doctorId === selectedDoctor._id &&
